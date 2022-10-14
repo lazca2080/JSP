@@ -7,7 +7,8 @@
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-String host = "jdbc:mysql://127.0.0.1:3306/java2db";
+
+	String host = "jdbc:mysql://127.0.0.1:3306/java2db";
 	String user = "root";
 	String pass = "1234";
 	
@@ -23,15 +24,15 @@ String host = "jdbc:mysql://127.0.0.1:3306/java2db";
 		
 		users = new ArrayList<>();
 		while(rs.next()){
-	Member mb = new Member();
-	mb.setUid(rs.getString(1));
-	mb.setName(rs.getString(2));
-	mb.setHp(rs.getString(3));
-	mb.setPos(rs.getString(4));
-	mb.setDep(rs.getInt(5));
-	mb.setRdate(rs.getString(6));
-	
-	users.add(mb);
+			Member mb = new Member();
+			mb.setUid(rs.getString(1));
+			mb.setName(rs.getString(2));
+			mb.setHp(rs.getString(3));
+			mb.setPos(rs.getString(4));
+			mb.setDep(rs.getInt(5));
+			mb.setRdate(rs.getString(6));
+			
+			users.add(mb);
 		}
 		
 		conn.close();

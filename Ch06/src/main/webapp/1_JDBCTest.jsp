@@ -15,5 +15,6 @@
 		<a href="./user/list.jsp">user CRUD 실습하기</a><br/>
 		<a href="./member/list.jsp">member CRUD 실습하기</a><br/>
 		<a href="./student/list.jsp">student CRUD 실습하기</a>
+		<a href="./lecture/list.jsp">lecture CRUD 실습하기</a>
 	</body>
 </html>

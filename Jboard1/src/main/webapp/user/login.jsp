@@ -3,7 +3,7 @@
 <main id="user">
     <section class="login">
         <form action="/Jboard1/list.jsp">
-            <table border="0">
+            <table>
                 <tr>
                     <td><img src="/Jboard1/image/login_ico_id.png" alt="아이디"></td>
                     <td><input type="text" name="uid" placeholder="아이디 입력"></td>

@@ -63,7 +63,7 @@
 				</tr>
 				<tr>
 					<td>생년월일</td>
-					<td><input type="date" name="birth"></td>
+					<td><input type="date" name="birth" value="<%= u5b.getBirth() %>"></td>
 				</tr>
 				
 				<tr>

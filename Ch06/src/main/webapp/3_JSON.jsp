@@ -37,12 +37,12 @@
 		 				success: function(data){
 		 					
 							for(let user of data){		 					
-		 						let tags =  "<tr>";
-		 							tags += "<td>"+user.uid+"</td>";
-		 							tags += "<td>"+user.name+"</td>";
-		 							tags += "<td>"+user.hp+"</td>";
-		 							tags += "<td>"+user.age+"</td>";
-		 							tags += "</tr>";
+		 						let tags = "<tr>";
+		 						   tags += "<td>"+user.uid+"</td>";
+		 						   tags += "<td>"+user.name+"</td>";
+		 						   tags += "<td>"+user.hp+"</td>";
+		 						   tags += "<td>"+user.age+"</td>";
+		 						   tags += "</tr>";
 		 							
 		 						$('table').append(tags);
 							}

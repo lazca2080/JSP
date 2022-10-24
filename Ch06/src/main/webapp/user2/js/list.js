@@ -25,14 +25,14 @@ $(function(){
 		
 	for(let user of data){
 		
-		let tr = "<tr>"
+		let tr = "<tr id='users'>"
 		   tr += "<td>"+user.uid+"</td>";
 		   tr += "<td>"+user.name+"</td>";
 		   tr += "<td>"+user.hp+"</td>";
 		   tr += "<td>"+user.age+"</td>";
 		   tr += "<td>" 
-		   tr += "<a href='#'>수정</a>" 
-		   tr += "<a href='#'>삭제</a>" 
+		   tr += "<a href='#' id='modify'>수정</a>"
+		   tr += "<a href='#' id='delete'>삭제</a>" 
 		   tr += "</td>" 
 		   tr += "</tr>";
 		   

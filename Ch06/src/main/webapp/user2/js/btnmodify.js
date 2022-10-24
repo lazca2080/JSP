@@ -1,11 +1,10 @@
 /**
  * 
  */
-
-function btnregister(){
-
+ 
+ function btnmodify() {
+	
 	$(function(){
-		
 		// 데이터 가져오기
 		let uid = $('input[name=uid]').val();
 		let name = $('input[name=name]').val();
@@ -22,7 +21,7 @@ function btnregister(){
 		
 		// 전송하기
 		$.ajax({
-			url:'./data/register.jsp',
+			url:'./data/modify.jsp',
 			method:'post',
 			data:jsonData,
 			datatype:'json',
@@ -36,5 +35,6 @@ function btnregister(){
 				}
 			}
 		});
+
 	});
 }

@@ -8,11 +8,12 @@
 		<script src="./js/list.js"></script>
 		<script src="./js/register.js"></script>
 		<script src="./js/btnregister.js"></script>
-		<script>
-			
-			let suc = null;
+		<script src="./js/modify.js"></script>
+		<script src="./js/btnmodify.js"></script>
 		
+		<script>
 			$(document).ready(function(){
+				
 				
 				// user2 목록 불러오기
 				list();
@@ -36,14 +37,25 @@
 				});
 				
 				
-				$(document).on('click', '#btnRegister', function(e){
+				// user2 수정화면
+				$(document).on('click', '#modify', function(e){
 					e.preventDefault();
-					if(suc == 1){
-						list();	
-					}
+					let users = $('#users > td');
+					modify(users);			
+				});
+				
+				// user2 수정하기
+				$(document).on('click', '#btnmodify', function(e){
+					e.preventDefault();
+					btnmodify();
+				});
+				
+				// user2 삭제하기
+				$(document).on('click', '#delete', function(e){
+					e.preventDefault();
+					
 					
 				});
-
 			});
 		</script>
 	</head>

@@ -1,11 +1,5 @@
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="com.google.gson.Gson"%>
-<%@page import="bean.UserBean"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
 <%@page import="config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
@@ -19,11 +13,12 @@
 	
 	try{
 		Connection conn = DBCP.getConnection();
-		PreparedStatement psmt = conn.prepareStatement("INSERT INTO `user2` VALUES(?,?,?,?)");
-		psmt.setString(1, uid);
-		psmt.setString(2, name);
-		psmt.setString(3, hp);
-		psmt.setString(4, age);
+		String sql = "UPDATE `user2` SET `name`=?, `hp`=?, `age`=? WHERE `uid`=?";
+		PreparedStatement psmt = conn.prepareStatement(sql);
+		psmt.setString(1, name);
+		psmt.setString(2, hp);
+		psmt.setString(3, age);
+		psmt.setString(4, uid);
 		
 		result = psmt.executeUpdate();
 		
@@ -38,4 +33,5 @@
 	json.addProperty("result", result);
 	String jsonData = json.toString();
 	out.print(jsonData);
+
 %>

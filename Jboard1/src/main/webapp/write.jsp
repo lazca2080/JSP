@@ -2,7 +2,8 @@
 <%@ include file="./_header.jsp" %>
 <main id="Board">
     <section class="Write">
-        <form action="#">
+        <form action="/Jboard1/proc/writeProc.jsp" method="post">
+        	<input type="hidden" name="uid" value="<%= ub.getUid() %>">
             <table>
                 <caption>글쓰기</caption>
                 <tr>
@@ -11,7 +12,7 @@
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td><textarea name="text" id="sub" cols="30" rows="10"></textarea></td>
+                    <td><textarea name="content" id="sub" cols="30" rows="10"></textarea></td>
                 </tr>
                 <tr>
                     <th>첨부</th>

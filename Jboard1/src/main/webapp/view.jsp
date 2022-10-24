@@ -1,20 +1,53 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="kr.co.jboard1.bean.ArticleBean"%>
+<%@page import="kr.co.jboard1.db.Sql"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="kr.co.jboard1.db.DBCP"%>
+<%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String no = request.getParameter("no");
+	ArticleBean ab = null;
+	
+	try{
+		Connection conn = DBCP.getConnection();
+		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_VIEW);
+		psmt.setString(1, no);
+		ResultSet rs = psmt.executeQuery();
+		
+		if(rs.next()){
+			ab = new ArticleBean();
+			ab.setTitle(rs.getString(5));
+			ab.setContent(rs.getString(6));
+			ab.setFile(rs.getString(7));
+		}
+		
+		conn.close();
+		psmt.close();
+		rs.close();
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+
+%>
 <main id="Board">
     <section class="View">
         <table>
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td>제목입니다.</td>
+                <td><%= ab.getTitle() %></td>
             </tr>
             <tr>
                 <th>첨부파일</th>
-                <td><a href="#">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
+                <td><a href="#"><%= ab.getFile() %></a>&nbsp;<span>7</span>회 다운로드</td>
             </tr>
             <tr>
                 <th>내용</th>
-                <td><textarea name="content" readonly>내용 샘플입니다.</textarea></td>
+                <td><textarea name="content" readonly><%= ab.getContent() %></textarea></td>
             </tr>
         </table>
         <div>

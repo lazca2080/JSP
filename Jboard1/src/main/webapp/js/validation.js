@@ -47,7 +47,7 @@
 				$.ajax({
 					url:'./proc/checkUid.jsp',
 					method:'get',
-					data:'jsonData',
+					data:jsonData,
 					datatype:'json',
 					success:function(data){
 						console.log('2');
@@ -126,7 +126,7 @@
 				$.ajax({
 					url:'./proc/checkNick.jsp',
 					method:'get',
-					data:'jsonData',
+					data:jsonData,
 					datatype:'json',
 					success:function(data){
 						

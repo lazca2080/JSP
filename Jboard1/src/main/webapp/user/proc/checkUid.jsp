@@ -1,7 +1,8 @@
+<%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="config.DBCP"%>
+<%@page import="kr.co.jboard1.db.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -16,7 +17,7 @@
 	try{
 		Connection conn = DBCP.getConnection();
 		
-		PreparedStatement psmt = conn.prepareStatement("SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=?");
+		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_UID);
 		psmt.setString(1, uid);
 		
 		ResultSet rs = psmt.executeQuery();

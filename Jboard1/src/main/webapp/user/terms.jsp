@@ -1,6 +1,7 @@
+<%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="config.DBCP"%>
+<%@page import="kr.co.jboard1.db.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
@@ -26,10 +27,8 @@
 
 	try{
 		Connection conn = DBCP.getConnection();
-		
-		String sql = "SELECT * FROM `board_terms`";
 		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(sql);
+		ResultSet rs = stmt.executeQuery(Sql.SELECT_TERMS);
 		
 		if(rs.next()){
 			terms   = rs.getString(1);

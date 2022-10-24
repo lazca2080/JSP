@@ -1,8 +1,14 @@
 
-function btndelete(){
+function btndelete(d){
 	
 	$(function(){
-		
+			
+		let uid = d.eq(0).text();
+			
+			let jsonData = {
+				"uid" : uid
+			};
+			
 			$.ajax({
 			url:'./data/delete.jsp',
 			method:'post',
@@ -11,10 +17,10 @@ function btndelete(){
 			success: function(data){
 				
 				if(data.result == 1){
-					alert('입력 성공');
+					alert('삭제 성공');
 					list();
 				}else{
-					alert('입력 실패!');
+					alert('삭제 실패!');
 				}
 			}
 		});

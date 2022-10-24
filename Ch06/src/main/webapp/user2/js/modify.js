@@ -1,15 +1,15 @@
 
-function modify(u){
+function modify(m){
 	
 $(function(){
 	
 	$('section').empty();
 		$('nav').empty().append("<h4>user2 수정</h4><a href='#' id='userList'>user2 목록</a>");
 		
-		let uid = u.eq(0).text();
-		let name = u.eq(1).text();
-		let hp = u.eq(2).text();
-		let age = u.eq(3).text();
+		let uid = m.eq(0).text();
+		let name = m.eq(1).text();
+		let hp = m.eq(2).text();
+		let age = m.eq(3).text();
 		
 		
 		let table = "<table border='1'>";

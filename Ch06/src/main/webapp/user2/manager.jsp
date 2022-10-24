@@ -10,10 +10,11 @@
 		<script src="./js/btnregister.js"></script>
 		<script src="./js/modify.js"></script>
 		<script src="./js/btnmodify.js"></script>
-		
+		<script src="./js/delete.js"></script>
 		<script>
 			$(document).ready(function(){
 				
+				let users = $('#users > td');
 				
 				// user2 목록 불러오기
 				list();
@@ -40,21 +41,19 @@
 				// user2 수정화면
 				$(document).on('click', '#modify', function(e){
 					e.preventDefault();
-					let users = $('#users > td');
 					modify(users);			
 				});
 				
 				// user2 수정하기
 				$(document).on('click', '#btnmodify', function(e){
-					e.preventDefault();
 					btnmodify();
 				});
 				
 				// user2 삭제하기
 				$(document).on('click', '#delete', function(e){
 					e.preventDefault();
-					
-					
+					let users = $('#users > td');
+					btndelete(users);
 				});
 			});
 		</script>

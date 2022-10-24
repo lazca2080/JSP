@@ -1,5 +1,5 @@
-<%@page import="java.sql.Statement"%>
 <%@page import="config.DBCP"%>
+<%@page import="java.sql.Statement"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="bean.User5Bean"%>

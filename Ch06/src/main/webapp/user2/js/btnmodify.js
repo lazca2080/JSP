@@ -28,10 +28,10 @@
 			success: function(data){
 				
 				if(data.result == 1){
-					alert('입력 성공');
+					alert('수정 성공');
 					list();
 				}else{
-					alert('입력 실패!');
+					alert('수정 실패!');
 				}
 			}
 		});

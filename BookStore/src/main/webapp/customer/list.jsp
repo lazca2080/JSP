@@ -1,6 +1,6 @@
+<%@page import="config.DBCP"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="bean.CustomerBean"%>
 <%@page import="java.util.ArrayList"%>

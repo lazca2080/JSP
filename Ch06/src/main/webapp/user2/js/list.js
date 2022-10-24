@@ -24,7 +24,6 @@ $(function(){
 	$('section').append(table);
 		
 	for(let user of data){
-		
 		let tr = "<tr id='users'>"
 		   tr += "<td>"+user.uid+"</td>";
 		   tr += "<td>"+user.name+"</td>";
@@ -35,6 +34,7 @@ $(function(){
 		   tr += "<a href='#' id='delete'>삭제</a>" 
 		   tr += "</td>" 
 		   tr += "</tr>";
+	   	i ++;
 		   
 		$('table').append(tr);
 	}

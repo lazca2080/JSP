@@ -34,7 +34,6 @@ $(function(){
 		   tr += "<a href='#' id='delete'>삭제</a>" 
 		   tr += "</td>" 
 		   tr += "</tr>";
-	   	i ++;
 		   
 		$('table').append(tr);
 	}

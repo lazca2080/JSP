@@ -14,8 +14,6 @@
 		<script>
 			$(document).ready(function(){
 				
-				let users = $('#users > td');
-				
 				// user2 목록 불러오기
 				list();
 				
@@ -41,6 +39,7 @@
 				// user2 수정화면
 				$(document).on('click', '#modify', function(e){
 					e.preventDefault();
+					let users = $('#users > td');
 					modify(users);			
 				});
 				

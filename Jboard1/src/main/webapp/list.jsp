@@ -12,6 +12,7 @@
 	request.setCharacterEncoding("UTF-8");
 	List<ArticleBean> article = new ArrayList<>();
 	
+	
 	try{
 		Connection conn = DBCP.getConnection();
 		Statement stmt = conn.createStatement();

@@ -10,10 +10,12 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 	ArticleBean ab = null;
+	Connection conn = null;
+	PreparedStatement psmt = null;
 	
 	try{
-		Connection conn = DBCP.getConnection();
-		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_VIEW);
+		conn = DBCP.getConnection();
+		psmt = conn.prepareStatement(Sql.SELECT_VIEW);
 		psmt.setString(1, no);
 		ResultSet rs = psmt.executeQuery();
 		
@@ -31,7 +33,26 @@
 	}catch(Exception e){
 		e.printStackTrace();
 	}
-
+	
+	String oriname = null;
+	String newname = null;
+	
+	try{
+		conn = DBCP.getConnection();
+		psmt = conn.prepareStatement("SELECT * FROM `board_file` WHERE `parent`=?");
+		psmt.setString(1, no);
+		ResultSet rs = psmt.executeQuery();
+		
+		if(rs.next()){
+			oriname = rs.getString(4);
+			newname = rs.getString(3);
+		}
+		
+		
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
 %>
 <main id="Board">
     <section class="View">
@@ -43,7 +64,7 @@
             </tr>
             <tr>
                 <th>첨부파일</th>
-                <td><a href="#"><%= ab.getFile() %></a>&nbsp;<span>7</span>회 다운로드</td>
+                <td><a href="#"><%= oriname== null ? "없음" : oriname %></a>&nbsp;<span>7</span>회 다운로드</td>
             </tr>
             <tr>
                 <th>내용</th>

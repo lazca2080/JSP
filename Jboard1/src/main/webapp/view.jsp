@@ -1,3 +1,4 @@
+<%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="kr.co.jboard1.bean.ArticleBean"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
@@ -23,7 +24,9 @@
 			ab = new ArticleBean();
 			ab.setTitle(rs.getString(5));
 			ab.setContent(rs.getString(6));
-			ab.setFile(rs.getString(7));
+			ab.setFile(rs.getInt(7));
+			int hit = rs.getInt(8)+1;
+			ab.setHit(hit);
 		}
 		
 		conn.close();
@@ -34,8 +37,9 @@
 		e.printStackTrace();
 	}
 	
-	String oriname = null;
-	String newname = null;
+	String oriname  = null;
+	String newname  = null;
+	int download    = 0;
 	
 	try{
 		conn = DBCP.getConnection();
@@ -44,8 +48,9 @@
 		ResultSet rs = psmt.executeQuery();
 		
 		if(rs.next()){
-			oriname = rs.getString(4);
-			newname = rs.getString(3);
+			newname  = rs.getString(3);
+			oriname  = rs.getString(4);
+			download = rs.getInt(5);
 		}
 		
 		
@@ -64,7 +69,7 @@
             </tr>
             <tr>
                 <th>첨부파일</th>
-                <td><a href="#"><%= oriname== null ? "없음" : oriname %></a>&nbsp;<span>7</span>회 다운로드</td>
+                <td><a href="#"><%= oriname== null ? "없음" : oriname %></a>&nbsp;<span><%= download %></span>회 다운로드</td>
             </tr>
             <tr>
                 <th>내용</th>

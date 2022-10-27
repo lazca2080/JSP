@@ -35,8 +35,15 @@ public class Sql {
 											+ "`newName`=?,"
 											+ "`oriName`=?";
 	
+	public static final String SELECT_COUNT_TOTAL = "SELECT count(`no`) FROM `board_article`";
+	
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	
-	public static final String SELECT_ARTICLE = "SELECT * FROM `board_article`";
+	public static final String SELECT_ARTICLES = "SELECT a.*, `nick` FROM `board_article` "
+												+ "AS a JOIN `board_user` "
+												+ "AS b ON a.uid = b.uid "
+												+ "ORDER BY a.`no` desc "
+												+ "LIMIT ?, 10";
+	
 	public static final String SELECT_VIEW = "SELECT * FROM `board_article` WHERE `no`=?";
 }

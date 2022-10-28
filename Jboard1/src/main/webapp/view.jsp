@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="kr.co.jboard1.bean.ArticleBean"%>
@@ -10,53 +11,16 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
-	ArticleBean ab = null;
-	Connection conn = null;
-	PreparedStatement psmt = null;
+	String pg = request.getParameter("pg");
 	
-	try{
-		conn = DBCP.getConnection();
-		psmt = conn.prepareStatement(Sql.SELECT_VIEW);
-		psmt.setString(1, no);
-		ResultSet rs = psmt.executeQuery();
-		
-		if(rs.next()){
-			ab = new ArticleBean();
-			ab.setTitle(rs.getString(5));
-			ab.setContent(rs.getString(6));
-			ab.setFile(rs.getInt(7));
-			int hit = rs.getInt(8)+1;
-			ab.setHit(hit);
-		}
-		
-		conn.close();
-		psmt.close();
-		rs.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
 	
-	String oriname  = null;
-	String newname  = null;
-	int download    = 0;
+	ArticleDAO dao = ArticleDAO.getInstance();
 	
-	try{
-		conn = DBCP.getConnection();
-		psmt = conn.prepareStatement("SELECT * FROM `board_file` WHERE `parent`=?");
-		psmt.setString(1, no);
-		ResultSet rs = psmt.executeQuery();
-		
-		if(rs.next()){
-			newname  = rs.getString(3);
-			oriname  = rs.getString(4);
-			download = rs.getInt(5);
-		}
-		
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	// 조회수 +1
+	dao.updateArticleHit(no);
+	
+	// 글 가져오기
+	ArticleBean article = dao.selectArticle(no);
 	
 %>
 <main id="Board">
@@ -65,21 +29,23 @@
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><%= ab.getTitle() %></td>
+                <td><input type="text" name="title" readonly value="<%= article.getTitle() %>"></td>
             </tr>
+            <% if(article.getFile() > 0) { %>
             <tr>
                 <th>첨부파일</th>
-                <td><a href="#"><%= oriname== null ? "없음" : oriname %></a>&nbsp;<span><%= download %></span>회 다운로드</td>
+                <td><a href="/Jboard1/proc/download.jsp?parent=<%= no %>"><%= article.getOriName() %></a>&nbsp;<span><%= article.getDownload() %></span>회 다운로드</td>
             </tr>
+            <% } %>
             <tr>
                 <th>내용</th>
-                <td><textarea name="content" readonly><%= ab.getContent() %></textarea></td>
+                <td><textarea name="content" readonly><%= article.getContent() %></textarea></td>
             </tr>
         </table>
         <div>
             <a href="/Jboard1/list.jsp" class="btn btnRemove">삭제</a>
             <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
-            <a href="/Jboard1/list.jsp" class="btn btnList">목록</a>
+            <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
         </div>
         <!-- 댓글목록 -->
         <section class="commentList">

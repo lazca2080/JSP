@@ -15,7 +15,7 @@ public class CookieManager {
 		response.addCookie(cookie);
 	}
 	
-	public static String readCookie(HttpServletResponse request, String cName) {
+	public static String readCookie(HttpServletRequest request, String cName) {
 		String cookieValue = "";
 		
 		Cookie[] cookies = ((HttpServletRequest) request).getCookies();

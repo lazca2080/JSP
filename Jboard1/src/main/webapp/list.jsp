@@ -58,6 +58,9 @@
 	
 	// 현재 페이지 게시물 가져오기
 	List<ArticleBean> article = dao.selectArticles(limitStart);
+	
+	// 댓글 개수 계산
+	
 %>
 <main id="Board">
     <section class="list">

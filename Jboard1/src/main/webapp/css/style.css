@@ -428,14 +428,20 @@
             }
             
             #Board > .View > .commentList {}
-            #Board > .View > .commentList > article {overflow: hidden;}
+            #Board > .View > .commentList > article {
+            overflow: hidden;
+            border-bottom: 1px dotted #999999;
+            margin-bottom: 5px;
+            }
             #Board > .View > .commentList .nick {}
             #Board > .View > .commentList .date {}
             #Board > .View > .commentList .content {
                 padding: 10px;
+                white-space: pre-wrap;
             }
             #Board > .View > .commentList > article > div {
                 float: right;
+                margin-bottom: 5px;
             }
             #Board > .View > .commentList > article .remove {}
             #Board > .View > .commentList > article .modify {}

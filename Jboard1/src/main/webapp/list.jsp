@@ -13,6 +13,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String pg = request.getParameter("pg"); // 게시물 그룹 이동 버튼에서 보내진 pg 수신하기
 	
+	
 	// 게시물 목록 처리 관련 변수 선언
 	int limitStart = 0;       // SQL Limit ?, 10의 ?값 시작값
 	int currentPg = 1;        // 현재 페이지 값 로그인페이지에서 넘어올시 첫화면으로 표시하기 위해 1값

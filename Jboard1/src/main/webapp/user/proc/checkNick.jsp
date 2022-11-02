@@ -1,3 +1,4 @@
+<%@page import="kr.co.jboard1.dao.UserDAO"%>
 <%@page import="kr.co.jboard1.db.Sql"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="java.sql.ResultSet"%>
@@ -10,29 +11,9 @@
 	request.setCharacterEncoding("UTF-8");
 	String nick = request.getParameter("nick");
 	
-	int result = 0;
-	
 	// 데이터베이스 처리
 	
-	try{
-		Connection conn = DBCP.getConnection();
-		
-		PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_NICK);
-		psmt.setString(1, nick);
-		
-		ResultSet rs = psmt.executeQuery();
-		
-		if(rs.next()){
-			result = rs.getInt(1);
-		}
-		
-		rs.close();
-		psmt.close();
-		conn.close();
-		
-	}catch(Exception e){
-		e.printStackTrace();
-	}
+	int result = UserDAO.getInstance().selectNick(nick);
 	
 	// JSON 출력
 	JsonObject json = new JsonObject();

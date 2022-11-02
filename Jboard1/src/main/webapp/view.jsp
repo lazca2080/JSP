@@ -13,6 +13,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String no = request.getParameter("no");
 	String pg = request.getParameter("pg");
+	String modify = request.getParameter("result");
 	
 	ArticleDAO dao = ArticleDAO.getInstance();
 	
@@ -29,15 +30,30 @@
 <script>
 	$(document).ready(function(){
 		
+		
+		
+		// 글 삭제
+		$('.btnRemove').click(function(){
+			
+			let isDelete = confirm('정말 삭제 하시겠습니까?');
+			
+			if(isDelete){
+				return true;
+			}else{
+				return false;
+			}
+			
+		});
+		
 		let today = new Date();
 
 		let year  = ('0' + today.getFullYear()).slice(-2);
 		let month = ('0' + (today.getMonth() + 1)).slice(-2);
 		let day   = ('0' + today.getDate()).slice(-2);
 
-		let dateString = year + '-' + month  + '-' + day;
+		let date = year + '-' + month  + '-' + day;
 		
-		console.log(dateString);
+		console.log(date);
 		
 		// 댓글 삭제
 		$(document).on('click', '.remove' ,function(e){
@@ -47,9 +63,9 @@
 			
 			if(isDeleteOk){
 			
-				let no      = $(this).attr('data-no');
+				let no       = $(this).attr('data-no');
 				let jsonData = { "no":no };
-				let article = $(this).closest('article');
+				let article  = $(this).closest('article');
 				
 				$.ajax({
 					url:'/Jboard1/proc/commentRemoveProc.jsp',
@@ -99,7 +115,7 @@
 						if(data.result == 1){
 							
 							alert('수정 되었습니다.');
-							date.text(dateString);
+							date.text(date);
 							p_tag.attr('contentEditable', false);
 						}
 					}
@@ -153,9 +169,7 @@
 					}
 				}
 			});
-			
 			return false;
-			
 		});
 	});
 
@@ -180,8 +194,10 @@
             </tr>
         </table>
         <div>
-            <a href="/Jboard1/list.jsp" class="btn btnRemove">삭제</a>
-            <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
+        	<% if( article.getUid().equals(ub.getUid())) { %>
+            <a href="/Jboard1/proc/deleteProc.jsp?no=<%= no %>&pg=<%= pg %>" class="btn btnRemove">삭제</a>
+            <a href="/Jboard1/modify.jsp?no=<%= no %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+            <% } %>
             <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
         </div>
         <!-- 댓글목록 -->
@@ -192,7 +208,7 @@
                 <span class="nick"><%= comment.getNick() %></span>
                 <span class="date"><%= comment.getRdate().substring(2, 10) %></span>
                 <p class="content"><%= comment.getContent() %></p>
-                <% if( comment.getNick().equals(ub.getNick()) ) { %>
+                <% if( comment.getUid().equals(ub.getUid()) ) { %>
                 <div>
                     <a href="#" class="remove" data-no="<%= comment.getNo() %>">삭제</a>
                     <a href="#" class="modify" data-no="<%= comment.getNo() %>">수정</a>

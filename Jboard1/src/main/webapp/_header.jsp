@@ -3,11 +3,15 @@
 <%
 	UserBean ub = (UserBean)session.getAttribute("sessUser");
 
+	String result = request.getParameter("result");
+
 	if(ub == null){
 		response.sendRedirect("/Jboard1/user/login.jsp?success=101");
 		return;
 	}
-%>
+	
+	%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,6 +19,15 @@
         <title>글목록</title>
         <link rel="stylesheet" href="/Jboard1/css/style.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script>
+        	let result = "<%= result %>";
+        	
+        	if( result == '201'){
+        			alert('수정완료!');
+        	}else if( result == '202' ){
+        			alert('삭제완료!');
+        	}
+        </script>
     </head>
     <body>
         <div id="wrapper">

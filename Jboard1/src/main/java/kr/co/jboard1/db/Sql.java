@@ -81,6 +81,10 @@ public class Sql {
 												+ "`rdate`=now() "
 												+ "WHERE `no`=?";
 	
+	public static final String UPDATE_ARTICLE_COMMENT_PLUS = "UPDATE `board_article` SET `comment`=`comment`+1 WHERE `no`=?";
+	
+	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `board_article` SET `comment`=`comment`-1 WHERE `no`=?";
+	
 	public static final String DELETE_ARTICLE = "DELETE FROM `board_article` WHERE `no`=? or `parent`=?";
 	
 	public static final String DELETE_FILE = "DELETE FROM `board_file` WHERE `parent`=?";

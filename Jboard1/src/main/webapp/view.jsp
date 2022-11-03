@@ -64,7 +64,8 @@
 			if(isDeleteOk){
 			
 				let no       = $(this).attr('data-no');
-				let jsonData = { "no":no };
+				let parent   = $(this).attr('data-parent');;
+				let jsonData = { "no":no, "parent":parent };
 				let article  = $(this).closest('article');
 				
 				$.ajax({
@@ -157,7 +158,7 @@
 						   article += "<span class='date'>&nbsp"+data.date+"</span>"
 						   article += "<p class='content'>"+data.content+"</p>"
 						   article += "<div>"
-						   article += "<a href='#' class='remove' data-no='"+data.no+"'>삭제</a>&nbsp"
+						   article += "<a href='#' class='remove' data-no='"+data.no+"' data-parent='"+data.parent+"'>삭제</a>&nbsp"
 						   article += "<a href='#' class='modify' data-no='"+data.no+"'>수정</a>"
 						   article += "</div>"
 						   article += "</article>"
@@ -210,7 +211,7 @@
                 <p class="content"><%= comment.getContent() %></p>
                 <% if( comment.getUid().equals(ub.getUid()) ) { %>
                 <div>
-                    <a href="#" class="remove" data-no="<%= comment.getNo() %>">삭제</a>
+                    <a href="#" class="remove" data-no="<%= comment.getNo() %>" data-parent="<%= comment.getParent() %>">삭제</a>
                     <a href="#" class="modify" data-no="<%= comment.getNo() %>">수정</a>
                 </div>
                 <% } %>

@@ -11,6 +11,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String no      = request.getParameter("no");
+	String parent  = request.getParameter("parent");
 	String content = request.getParameter("content");
 	String uid     = request.getParameter("uid");
 	String regip   = request.getRemoteAddr();

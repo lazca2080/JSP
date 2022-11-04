@@ -47,9 +47,10 @@
 	</head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 	<script>
+	
 		$(function(){
 			
-			$(document).on('click', '#btnOrder', function(e){
+			/*$(document).on('click', '#btnOrder', function(e){
 				e.preventDefault();
 				
 				let prodno = $(this).val();
@@ -77,8 +78,21 @@
 				   
 				$('section').append(table);
 			});
+			*/
 			
-			$(document).on('click', '#submit', function(e){
+			$('.btnOrder').click(function(){
+				let prodNo = $(this).val();
+				$('section').show().find('input[name=prodNo]').val(prodNo);
+				
+			});
+			
+			$('.btnClose').click(function(){
+				
+				$('section').hide();
+				
+			});
+			
+			/*$(document).on('click', '#submit', function(e){
 				e.preventDefault();
 				
 				let prodno  = $('input[name=prodno]').val();
@@ -105,6 +119,27 @@
 						}else{
 							alert('주문실패!');
 						}
+					}
+				});*/
+			
+			$('input[type=submit]').click(function(){
+				
+				let prodno  = $('input[name=prodNo]').val();
+				let orcount = $('input[name=prodCount]').val();
+				let orid    = $('input[name=prodOrderer]').val();
+				
+				let jsonData = {
+						"prodno":prodno,
+						"orcount":orcount,
+						"orid":orid
+				};
+				
+				$.post('./proc/orRegister.jsp', jsonData,function(data){
+
+					if(data.result == 1){
+						alert('주문완료!');
+					}else{
+						alert('주문실패!');
 					}
 				});
 			});
@@ -134,12 +169,31 @@
 				<td><%= pb.getPrprice() %></td>
 				<td><%= pb.getPrcompany() %></td>
 				<td>
-					<button id="btnOrder" value="<%= pb.getPrno() %>">주문</button>
+					<button class="btnOrder" value="<%= pb.getPrno() %>">주문</button>
 				</td>
 			</tr>
 			<% } %>
 		</table>
-		<nav></nav>
-		<section></section>
+		<section style="display:none">
+			<h4>주문하기</h4>
+			<table border='1'>
+				<tr>
+					<td>상품번호</td>
+					<td><input type="text" name="prodNo" readonly="readonly"></td>
+				</tr>
+				<tr>
+					<td>수량</td>
+					<td><input type="text" name="prodCount"></td>
+				</tr>
+				<tr>
+					<td>주문자</td>
+					<td><input type="text" name="prodOrderer"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right"><input type="submit" value="주문하기"></td>
+				</tr>
+			</table>
+			<button class="btnClose">닫기</button>
+		</section>
 	</body>
 </html>

@@ -60,6 +60,8 @@
 				
 				let jsonData = { "stdNo":stdNo }
 				
+				$('.tr').hide();
+				
 				$.ajax({
 					url:'./proc/registerSearchProc.jsp',
 					method:'get',
@@ -69,7 +71,7 @@
 						
 						$(data).each(function(){
 							
-							let tags = "<tr>"
+							let tags = "<tr class='tr'>"
 							   tags += "<td>"+this.stdNo+"</td>"
 							   tags += "<td>"+this.stdName+"</td>"
 							   tags += "<td>"+this.lecName+"</td>"
@@ -86,7 +88,7 @@
 				});
 			});
 			
-			$('input[type=submit]').click(function(){
+			$('#reg').click(function(){
 				
 				let regStdNo = $('input[name=regStdNo]').val();
 				let stdName = $('input[name=regStdName]').val();
@@ -98,6 +100,8 @@
 						"lecNo":lecNo
 				}
 				
+				$('.tr').hide();
+				
 				$.ajax({
 					url:'./proc/registerProc.jsp',
 					method:'get',
@@ -105,18 +109,21 @@
 					datatype:'json',
 					success: function(data){
 						
-						let tags = "<tr>";
-						   tags += "<td>"+regStdNo+"</td>"
-						   tags += "<td>"+StdName+"</td>"
-						   tags += "<td>"+lecName+"</td>"
-						   tags += "<td>"+lecNameNo+"</td>"
-						   tags += "<td></td>"
-						   tags += "<td></td>"
-						   tags += "<td></td>"
-						   tags += "<td></td>"
-						   tags += "</tr>"
-						   
-						$('.register').append(tags);
+						$(data).each(function(){
+							
+							let tags = "<tr class='tr'>"
+							   tags += "<td>"+this.stdNo+"</td>"
+							   tags += "<td>"+this.stdName+"</td>"
+							   tags += "<td>"+this.lecName+"</td>"
+							   tags += "<td>"+this.lecNo+"</td>"
+							   tags += "<td>"+this.regMidScore+"</td>"
+							   tags += "<td>"+this.regFinalScore+"</td>"
+							   tags += "<td>"+this.regTotalScore+"</td>"
+							   tags += "<td>"+this.regGrade+"</td>"
+							   tags += "</tr>"
+							
+							$('.register').append(tags);
+						});
 					}
 				});
 			});
@@ -169,7 +176,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="right"><input type="submit" value="신청"></td>
+					<td colspan="2" align="right"><input type="submit" value="신청" id="reg"></td>
 				</tr>
 			</table>
 		

@@ -46,10 +46,36 @@
 	<script>
 		$(function(){
 			
+			
+			// 수강신청버튼
 			$('.btnRegister').click(function(){
-				$('section').show();
+				
+				let stdNo = $('input[name=stdNo]').val();
+				
+				if(stdNo != ""){
+					
+					$('section').show();
+					
+					$('input[name=regStdNo]').val(stdNo);
+					
+					let jsonData = { "stdNo":stdNo }
+					
+					$.ajax({
+						url:'./proc/registerNameProc.jsp',
+						method:'get',
+						data:jsonData,
+						datatype:'json',
+						success: function(data){
+							
+							$('input[name=regStdName]').val(data.stdName);
+						}
+					});
+				}else{
+					alert('학번을 입력하세요');
+				}
 			});
 			
+			// 닫기버튼
 			$('.btnClose').click(function(){
 				$('section').hide();				
 			});
@@ -58,36 +84,52 @@
 				
 				let stdNo = $('input[name=stdNo]').val();
 				
-				let jsonData = { "stdNo":stdNo }
-				
-				$('.tr').hide();
-				
-				$.ajax({
-					url:'./proc/registerSearchProc.jsp',
-					method:'get',
-					data:jsonData,
-					datatype:'json',
-					success: function(data){
-						
-						$(data).each(function(){
+				if(stdNo != ""){
+					let jsonData = { "stdNo":stdNo }
+					
+					$('.tr').hide();
+					$('section').hide();
+					
+					$.ajax({
+						url:'./proc/registerSearchProc.jsp',
+						method:'get',
+						data:jsonData,
+						datatype:'json',
+						success: function(data){
 							
-							let tags = "<tr class='tr'>"
-							   tags += "<td>"+this.stdNo+"</td>"
-							   tags += "<td>"+this.stdName+"</td>"
-							   tags += "<td>"+this.lecName+"</td>"
-							   tags += "<td>"+this.lecNo+"</td>"
-							   tags += "<td>"+this.regMidScore+"</td>"
-							   tags += "<td>"+this.regFinalScore+"</td>"
-							   tags += "<td>"+this.regTotalScore+"</td>"
-							   tags += "<td>"+this.regGrade+"</td>"
-							   tags += "</tr>"
+							if(data != ""){
+								$(data).each(function(){
+									
+									let tags = "<tr class='tr'>"
+									   tags += "<td>"+this.stdNo+"</td>"
+									   tags += "<td>"+this.stdName+"</td>"
+									   tags += "<td>"+this.lecName+"</td>"
+									   tags += "<td>"+this.lecNo+"</td>"
+									   tags += "<td>"+this.regMidScore+"</td>"
+									   tags += "<td>"+this.regFinalScore+"</td>"
+									   tags += "<td>"+this.regTotalScore+"</td>"
+									   tags += "<td>"+this.regGrade+"</td>"
+									   tags += "<td><input type='submit' value='관리' class='manage'></td>"
+									   tags += "</tr>"
+										
+									$('.register').append(tags);									
+
+								});
+							}else{
+								alert('검색된 수강목록이 없습니다. 수강신청을 하세요');
+							}
 							
-							$('.register').append(tags);
-						});
-					}
-				});
+
+						}
+					});
+				}else{
+					alert('학번을 입력하세요');
+				}
+				
+
 			});
 			
+			// 신청버튼
 			$('#reg').click(function(){
 				
 				let regStdNo = $('input[name=regStdNo]').val();
@@ -120,6 +162,7 @@
 							   tags += "<td>"+this.regFinalScore+"</td>"
 							   tags += "<td>"+this.regTotalScore+"</td>"
 							   tags += "<td>"+this.regGrade+"</td>"
+							   tags += "<td><input type='submit' value='관리' class='manage'></td>"
 							   tags += "</tr>"
 							
 							$('.register').append(tags);
@@ -127,6 +170,15 @@
 					}
 				});
 			});
+			
+			// 관리버튼
+			$(document).on('click', '.manage', function(){
+				
+				
+				
+			});
+			
+			
 		});
 	
 	</script>
@@ -137,7 +189,7 @@
 		<a href="./student.jsp">학생관리</a>
 		
 		<h4>수강현황</h4>
-		<input type="text" name="stdNo" placeholder="">
+		<input type="text" name="stdNo" placeholder="학번을 입력하세요">
 		<input type="submit" value="검색" class="search">
 		<input type="submit" value="수강신청" class="btnRegister">
 		<table border="1" class="register">
@@ -150,6 +202,7 @@
 				<th>기말시험</th>
 				<th>총점</th>
 				<th>등급</th>
+				<th>관리</th>
 			</tr>
 		</table>
 		
@@ -159,11 +212,11 @@
 			<table border="1">
 				<tr>
 					<td>학번</td>
-					<td><input type="text" name="regStdNo"></td>
+					<td><input type="text" name="regStdNo" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="regStdName"></td>
+					<td><input type="text" name="regStdName" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<td>신청강좌</td>

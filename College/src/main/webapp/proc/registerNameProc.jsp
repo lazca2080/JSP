@@ -11,36 +11,21 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String stdNo = request.getParameter("stdNo");
-	List<RegisterBean> register = new ArrayList<>();
+	RegisterBean rb = null;
 	
 	try{
 		Connection conn = DBCP.getConnection();
 		
-		String sql = "SELECT `stdNo`, `stdName`, `lecName`, `lecNo`, `regMidScore`, `regFinalScore`, `regTotalScore`, `regGrade` ";
-			  sql += "FROM `lecture` AS a ";
-			  sql += "JOIN `register` AS b ";
-			  sql += "ON a.lecNo = b.regLecNo ";
-			  sql += "JOIN `student` AS c ";
-			  sql += "ON b.regStdNo = c.stdNo ";
-			  sql += "WHERE `stdNo` = ?";
+		String sql = "SELECT * FROM `student` WHERE `stdNo`=?";
 		
 	  	PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, stdNo);
 		
 		ResultSet rs = stmt.executeQuery();
 		
-		while(rs.next()){
-			RegisterBean rb = new RegisterBean();
-			rb.setStdNo(rs.getString(1));
+		if(rs.next()){
+			rb = new RegisterBean();
 			rb.setStdName(rs.getString(2));
-			rb.setLecName(rs.getString(3));
-			rb.setLecNo(rs.getInt(4));
-			rb.setRegMidScore(rs.getInt(5));
-			rb.setRegFinalScore(rs.getInt(6));
-			rb.setRegTotalScore(rs.getInt(7));
-			rb.setRegGrade(rs.getString(8));
-			
-			register.add(rb);
 		}
 		
 		conn.close();
@@ -51,8 +36,7 @@
 		e.printStackTrace();
 	}
 	
-	Gson gson = new Gson();
-	String result = gson.toJson(register);
-	out.print(result);
-	
+	JsonObject json = new JsonObject();
+	json.addProperty("stdName", rb.getStdName());
+	out.print(json.toString());
 %>

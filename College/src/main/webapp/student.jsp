@@ -22,7 +22,6 @@
 			sb.setStdYear(rs.getInt(4));
 			sb.setStdAddress(rs.getString(5));
 			
-			
 			student.add(sb);
 		}
 		
@@ -57,19 +56,21 @@
 				let stdNo      = $('input[name=stdNo]').val();
 				let stdName    = $('input[name=stdName]').val();
 				let stdHp      = $('input[name=stdHp]').val();
-				let stdYear    = $('input[name=stdYear]').val();
+				let stdYear    = $('.select').val();
 				let stdAddress = $('input[name=stdAddress]').val();
 				
 				let jsonData = {
-						"lecNo":lecNo,
-						"lecName":lecName,
-						"lecCredit":lecCredit,
-						"lecTime":lecTime,
-						"lecClass":lecClass
+						"stdNo":stdNo,
+						"stdName":stdName,
+						"stdHp":stdHp,
+						"stdYear":stdYear,
+						"stdAddress":stdAddress
 				}
 				
+				console.log(stdYear);
+				
 				$.ajax({
-					url:'./proc/lectureProc.jsp',
+					url:'./proc/studentProc.jsp',
 					method:'post',
 					data:jsonData,
 					datatype:'json',
@@ -78,22 +79,20 @@
 						if(data.result == 1){
 							alert('등록 성공');
 							let table = "<tr>";
-							   table += "<td>"+lecNo+"</td>";
-							   table += "<td>"+lecName+"</td>";
-							   table += "<td>"+lecCredit+"</td>";
-							   table += "<td>"+lecTime+"</td>";
-							   table += "<td>"+lecClass+"</td>";
+							   table += "<td>"+stdNo+"</td>";
+							   table += "<td>"+stdName+"</td>";
+							   table += "<td>"+stdHp+"</td>";
+							   table += "<td>"+stdYear+"</td>";
+							   table += "<td>"+stdAddress+"</td>";
 							   table += "</tr>";
 							   
-							$('.lecture').append(table);
+							$('.student').append(table);
 						}else{
 							alert('등록 실패');
 						}
 					}
 				});
 			});
-			
-			
 		});
 	
 	</script>
@@ -105,7 +104,7 @@
 		
 		<h4>학생목록</h4>
 				<button class="btnRegister">등록</button>
-		<table border="1" class="lecture">
+		<table border="1" class="student">
 			<tr>
 				<th>학번</th>
 				<th>이름</th>
@@ -118,7 +117,7 @@
 				<td><%= sb.getStdNo() %></td>
 				<td><%= sb.getStdName() %></td>
 				<td><%= sb.getStdHp() %></td>
-				<td><%= sb.getStdHp() %></td>
+				<td><%= sb.getStdYear() %></td>
 				<td><%= sb.getStdAddress() %></td>
 			</tr>
 			<% } %>
@@ -143,12 +142,9 @@
 					<td>학년</td>
 					<td>
 						<select class="select">
-							<option value="1학년">1학년</option>
-							<option value="2학년">2학년</option>
-							<option value="3학년">3학년</option>
-							<option value="4학년">4학년</option>
-							<option value="5학년">5학년</option>
-							<option value="6학년">6학년</option>
+							<option value="1">1학년</option>
+							<option value="2">2학년</option>
+							<option value="3">3학년</option>
 						</select>
 					</td>
 				</tr>

@@ -36,7 +36,14 @@
 		e.printStackTrace();
 	}
 	
-	JsonObject json = new JsonObject();
-	json.addProperty("stdName", rb.getStdName());
-	out.print(json.toString());
+	if(rb != null){
+		JsonObject json = new JsonObject();
+		json.addProperty("stdName", rb.getStdName());
+		out.print(json.toString());		
+	}else{
+		JsonObject json = new JsonObject();
+		json.addProperty("stdName", "a");
+		out.print(json.toString());
+	}
+		
 %>

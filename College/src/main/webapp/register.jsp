@@ -46,17 +46,12 @@
 	<script>
 		$(function(){
 			
-			
 			// 수강신청버튼
 			$('.btnRegister').click(function(){
 				
 				let stdNo = $('input[name=stdNo]').val();
 				
 				if(stdNo != ""){
-					
-					$('section').show();
-					
-					$('input[name=regStdNo]').val(stdNo);
 					
 					let jsonData = { "stdNo":stdNo }
 					
@@ -67,7 +62,15 @@
 						datatype:'json',
 						success: function(data){
 							
-							$('input[name=regStdName]').val(data.stdName);
+							if(data.stdName == "a"){
+								alert('등록된 학생이 아닙니다.');
+								$('section').hide();
+								$('.tr').hide();
+							}else{
+								$('section').show();
+								$('input[name=regStdName]').val(data.stdName);
+								$('input[name=regStdNo]').val(stdNo);
+							}
 						}
 					});
 				}else{
@@ -80,6 +83,7 @@
 				$('section').hide();				
 			});
 			
+			// 검색버튼
 			$('.search').click(function(){
 				
 				let stdNo = $('input[name=stdNo]').val();
@@ -105,10 +109,10 @@
 									   tags += "<td>"+this.stdName+"</td>"
 									   tags += "<td>"+this.lecName+"</td>"
 									   tags += "<td>"+this.lecNo+"</td>"
-									   tags += "<td>"+this.regMidScore+"</td>"
-									   tags += "<td>"+this.regFinalScore+"</td>"
-									   tags += "<td>"+this.regTotalScore+"</td>"
-									   tags += "<td>"+this.regGrade+"</td>"
+									   tags += "<td><p class='midscore' contenteditable='false'>"+this.regMidScore+"</p></td>"
+									   tags += "<td><p class='finalscore' contenteditable='false'>"+this.regFinalScore+"</p></td>"
+									   tags += "<td><p class='totalscore' contenteditable='false'>"+this.regTotalScore+"</p></td>"
+									   tags += "<td><p class='grade' contenteditable='false'>"+this.regGrade+"</p></td>"
 									   tags += "<td><input type='submit' value='관리' class='manage'></td>"
 									   tags += "</tr>"
 										
@@ -118,15 +122,11 @@
 							}else{
 								alert('검색된 수강목록이 없습니다. 수강신청을 하세요');
 							}
-							
-
 						}
 					});
 				}else{
 					alert('학번을 입력하세요');
 				}
-				
-
 			});
 			
 			// 신청버튼
@@ -158,10 +158,10 @@
 							   tags += "<td>"+this.stdName+"</td>"
 							   tags += "<td>"+this.lecName+"</td>"
 							   tags += "<td>"+this.lecNo+"</td>"
-							   tags += "<td>"+this.regMidScore+"</td>"
-							   tags += "<td>"+this.regFinalScore+"</td>"
-							   tags += "<td>"+this.regTotalScore+"</td>"
-							   tags += "<td>"+this.regGrade+"</td>"
+							   tags += "<td><p class='midscore' contenteditable='false'>"+this.regMidScore+"</p></td>"
+							   tags += "<td><p class='finalscore' contenteditable='false'>"+this.regFinalScore+"</p></td>"
+							   tags += "<td><p class='totalscore' contenteditable='false'>"+this.regTotalScore+"</p></td>"
+							   tags += "<td><p class='grade' contenteditable='false'>"+this.regGrade+"</p></td>"
 							   tags += "<td><input type='submit' value='관리' class='manage'></td>"
 							   tags += "</tr>"
 							
@@ -174,11 +174,62 @@
 			// 관리버튼
 			$(document).on('click', '.manage', function(){
 				
+				let mod = $(this);
+				mod1 = mod.val();
+				let p = $(this).parent().parent().children('td').children('p');
 				
-				
+				if(mod1 == "관리"){
+					
+					mod.val('수정');
+					p.focus();
+					p.attr('contenteditable', true);
+					
+				}else{
+					
+					let stdno = $(this).parent().parent().children('td:eq(0)');
+					let lecno = $(this).parent().parent().children('td:eq(3)');
+					let midscore = $(this).parent().parent().children('td').children('.midscore');
+					let finalscore = $(this).parent().parent().children('td').children('.finalscore');
+					let totalscore = $(this).parent().parent().children('td').children('.totalscore');
+					let grade = $(this).parent().parent().children('td').children('.grade');
+					
+					let jsonData = {
+							"stdno":stdno.text(),
+							"lecno":lecno.text(),
+							"midscore":midscore.text(),
+							"finalscore":finalscore.text(),
+							"totalscore":totalscore.text(),
+							"grade":grade.text()
+					};
+					
+					
+					$.ajax({
+						url:'./proc/registerModifyProc.jsp',
+						method:'post',
+						data:jsonData,
+						datatype:'json',
+						success: function(data){
+							
+							if(data.result == 1){
+								
+								alert('수정 성공!');
+								mod.val('관리');
+								p.attr('contenteditable', false);
+								
+								stdno.text(stdno.text());
+								lecno.text(lecno.text());
+								midscore.text(midscore.text());
+								finalscore.text(finalscore.text());
+								totalscore.text(totalscore.text());
+								grade.text(grade.text());
+								
+							}else{
+								alert('수정 실패!');
+							}
+						}
+					});
+				}
 			});
-			
-			
 		});
 	
 	</script>

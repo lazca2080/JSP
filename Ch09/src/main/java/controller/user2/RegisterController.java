@@ -1,4 +1,4 @@
-package controller.user1;
+package controller.user2;
 
 import java.io.IOException;
 
@@ -9,21 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.User1DAO;
-import vo.User1VO;
+import dao.User2DAO;
+import vo.User2VO;
 
-@WebServlet("/user1/register.do")
+@WebServlet("/user2/register.do")
 public class RegisterController extends HttpServlet{
-
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void init() throws ServletException {
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user1/register.jsp");
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/register.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
@@ -35,15 +36,15 @@ public class RegisterController extends HttpServlet{
 		String hp   = req.getParameter("hp");
 		String age  = req.getParameter("age");
 		
-		User1VO vo = new User1VO();
+		User2VO vo = new User2VO();
 		vo.setUid(uid);
 		vo.setName(name);
 		vo.setHp(hp);
 		vo.setAge(age);
 		
-		User1DAO.getinstance().insertUser1(vo);
+		User2DAO.getinstance().insertUser2(vo);
 		
-		// 리다이렉트
-		resp.sendRedirect("/Ch09/user1/list.do");
+		resp.sendRedirect("/Ch09/user2/list.do");
 	}
+
 }

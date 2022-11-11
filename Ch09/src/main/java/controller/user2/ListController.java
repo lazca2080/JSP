@@ -1,4 +1,4 @@
-package controller;
+package controller.user2;
 
 import java.io.IOException;
 
@@ -9,24 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/greeting.do")
-public class GreetingController extends HttpServlet{
+@WebServlet("/user2/list.do")
+public class ListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	public void init() throws ServletException {
-		
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/greeting.jsp");
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/list.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
-
 }

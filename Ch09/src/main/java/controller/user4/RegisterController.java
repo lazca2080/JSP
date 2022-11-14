@@ -1,8 +1,7 @@
-package controller.user2;
+package controller.user4;
 
 import java.io.IOException;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.User2DAO;
-import vo.User2VO;
+import dao.User4DAO;
+import vo.User4VO;
 
-@WebServlet("/user2/modify.do")
-public class ModifyController extends HttpServlet{
+@WebServlet("/user4/register.do")
+public class RegisterController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
 	public void init() throws ServletException {
 	}
@@ -25,32 +24,28 @@ public class ModifyController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String uid = req.getParameter("uid");
-		
-		User2VO vo = User2DAO.getinstance().selectUser2(uid);
-		
-		req.setAttribute("vo", vo);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user2/modify.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user4/register.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String uid  = req.getParameter("uid");
-		String name = req.getParameter("name");
-		String hp   = req.getParameter("hp");
-		String age  = req.getParameter("age");
+		String name   = req.getParameter("name");
+		String gender = req.getParameter("gender");
+		String age    = req.getParameter("age");
+		String addr   = req.getParameter("addr");
 		
-		User2VO vo = new User2VO();
-		vo.setUid(uid);
+		User4VO vo = new User4VO();
 		vo.setName(name);
-		vo.setHp(hp);
+		vo.setGender(gender);
 		vo.setAge(age);
+		vo.setAddr(addr);
 		
-		User2DAO.getinstance().updateUser2(vo);
+		User4DAO.getinstance().insertUser4(vo);
 		
-		resp.sendRedirect("/Ch09/user2/list.do");
+		resp.sendRedirect("/Ch09/user4/list.do");
+		
 	}
+
 }

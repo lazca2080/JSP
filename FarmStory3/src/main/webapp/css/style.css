@@ -1,0 +1,501 @@
+        /* 초기화 */
+        *{
+            margin: 0;
+            padding: 0;
+            font: normal 12px '돋움';
+        }
+        ul,ol{ list-style:  none; }
+        a { text-decoration: none; color: #111; }
+        input,textarea { outline: none; }
+
+        #wrapper{
+            width: 980px;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        /* 헤더 */
+        header{
+            position: relative;
+            width: 100%;
+            height: 146px;
+        }
+
+        header > .gnb {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 50px;
+        }
+
+        header > .gnb > li {
+            float: left;
+            width: 20%;
+            height: 100%;
+            background-image: url(../img/head_menu_line.png);
+            background-repeat: no-repeat;
+            background-position: 0 -6px
+            
+        }
+        
+        header > .gnb > li > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-size: 0;
+        }
+
+        header > .gnb > li:nth-child(1) > a {
+            background-image: url(../img/head_menu1.png);
+            background-repeat: no-repeat;
+        }
+
+        header > .gnb > li:nth-child(2) > a {
+            background-image: url(../img/head_menu2.png);
+            background-repeat: no-repeat;
+        }
+
+        header > .gnb > li:nth-child(3) > a {
+            background-image: url(../img/head_menu3.png);
+            background-repeat: no-repeat;
+        }
+
+        header > .gnb > li:nth-child(4) > a {
+            background-image: url(../img/head_menu4.png);
+            background-repeat: no-repeat;
+        }
+
+        header > .gnb > li:nth-child(5) > a {
+            background-image: url(../img/head_menu5.png);
+            background-repeat: no-repeat;
+        }
+
+        header > .gnb > li:nth-child(1) > a:hover {
+            background-image: url(../img/head_menu1_ov.png);
+        }
+
+        header > .gnb > li:nth-child(2) > a:hover {
+            background-image: url(../img/head_menu2_ov.png);
+        }
+
+        header > .gnb > li:nth-child(3) > a:hover {
+            background-image: url(../img/head_menu3_ov.png);
+        }
+
+        header > .gnb > li:nth-child(4) > a:hover {
+            background-image: url(../img/head_menu4_ov.png);
+        }
+
+        header > .gnb > li:nth-child(5) > a:hover {
+            background-image: url(../img/head_menu5_ov.png);
+        }
+
+        header > .reg {
+            position: absolute;
+            right: -5px;
+            top: 15px;
+        }
+
+        header > .reg > li {
+            float: left;
+            margin-right: 5px;
+        }
+
+        header > .reg > li > a {}
+
+        header > .logo {
+            position: absolute;
+            left: 385px;
+            top: 20px;
+        }
+
+        header > img:nth-of-type(1) {
+            position: absolute;
+            right: 0;
+            top: 60px;
+        }
+
+        header > img:nth-of-type(2) {
+            position: absolute;
+            left: 321px;
+            top: 88px;
+            z-index: 3;
+        }
+		
+        /* 메인 */
+        main{
+            width: 100%;
+            height: auto;
+        }
+
+        main > div {
+            width: 100%;
+            margin-top: 10px;
+        }
+        main > .slider {
+            position: relative;
+            height: 312px;
+            overflow: hidden;
+        }
+
+        main > .slider > div {
+            position: relative;
+        }
+
+        main > .slider > div > img:nth-child(1) {
+            position: absolute;
+            width: 980px;
+            height: 312px;
+            z-index: 1;
+        }
+        main > .slider > div > img:nth-child(2) {
+            position: absolute;
+            width: 980px;
+            height: 312px;
+            z-index: 2;   
+        }
+        main > .slider > div > img:nth-child(3) {
+            position: absolute;
+            width: 980px;
+            height: 312px;
+            z-index: 3;
+        }
+
+        main > .slider > img:nth-child(1) {
+            position: absolute;
+            right: 0;
+            z-index: 4;
+        }
+    
+        main > .slider > img:nth-child(2) {
+            position: absolute;
+            top: 42px;
+            right:  13px;
+            z-index: 5;
+        }
+    
+        main > .slider > img:nth-child(3) {
+            position: absolute;
+            bottom: 0;
+            right: 13px;
+            z-index: 6;
+    
+        }
+    
+        main > .slider > img:nth-child(4) {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            z-index: 7;
+        }
+    
+        main > .slider > img:nth-child(5) {
+            position: absolute;
+            top: 30px;
+            left: 10px;
+            z-index: 8;
+        }
+    
+        main > .info > div {
+            position: relative;
+        }
+    
+        main > .info > div:nth-child(1) > div:nth-child(1) > img{
+            margin-top: 10px;
+            margin-bottom: 10px;
+    
+        }
+    
+        main > .info > div:nth-child(1) > div:nth-child(2){
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    
+        main > .info > div:nth-child(1) > div > p {
+            float: right;
+        }
+    
+        main > .info > div:nth-child(1) > div:nth-child(3){
+            margin-top: 10px;
+        }
+    
+        
+        main > .info > div:nth-child(2) > img{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+    
+        main > .info > div:nth-child(2) > p {
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        main > .quick {
+            position: relative;
+            height: 74px;
+            overflow: hidden;
+        }
+
+        main > .quick > a {
+            float: left;
+            display: block;
+            width: 50%;
+            height: 100%;
+        }
+
+        main > .quick > a:nth-child(1) {
+            background-image: url(../img/main_banner_sub1_bg.jpg);
+        }
+        main > .quick > a:nth-child(2) {
+            background-image: url(../img/main_banner_sub2_bg.jpg);
+        }
+
+        main > .quick > a:nth-child(1) > img {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+        }
+        main > .quick > a:nth-child(2) > img {
+            position: absolute;
+            top: 15px;
+            left: 500px;
+        }
+
+        main > .latest {
+            height: 186px;
+            overflow: hidden;
+        }
+
+        main > .latest > div{
+            position: relative;
+            float: left;
+            width: 33.33%;
+            height: 100%;
+        }
+
+        main > .latest > div > table {
+            position: absolute;
+            right: 10px;
+            top: 60px;
+        }
+
+        main > .latest > div > img{
+            position: absolute;
+            top: 62px;
+            left: 2px;
+        }
+
+        main > .latest > div > a{
+            padding: 10px;
+        }
+
+        main > .latest > div > table > tbody > tr > td > a {
+            display: block;
+            width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 18px;
+            color: #6a6a6a;
+        }
+
+        main > .latest > div > table > tbody > tr > td {
+            color: #6a6a6a;
+        }
+
+        main > .info {
+            height: 154px;
+            overflow: hidden;
+            border-top: 2px solid black;
+        }
+        
+        main > .info > div {
+            float: left;
+            height: 100%;
+            border-right: 1px solid #d7d7d7;
+        }
+
+        main > .info > div:nth-child(1){width: 386px;}
+
+        main > .info > div:nth-child(2){width: 230px;}
+
+        main > .info > div:nth-child(3){width: 358px;}
+
+        /* 푸터 */
+        footer{
+            background-image: url(../img/footer_top_line.png);
+            background-repeat: no-repeat;
+            position: relative;
+            width: 100%;
+            height: 120px;
+            margin-top: 10px;
+        }
+
+        footer > img {
+            position: absolute;
+        }
+
+        footer > span {
+            position: absolute;
+            top: 23px;
+            right: 35px;
+            font-size: 11px;
+            color: #585858;
+        }
+
+        footer > span > b {
+            font-size: 14px;
+            font-weight: bold;
+            color: #585858
+        }
+
+        /* 서브 페이지 공통 */
+        #sub {
+            width: 100%;
+            height: auto;
+        }
+        #sub > div {
+            position: relative;
+            width: 100%;
+            height: 184px;
+            background-image: url(../img/sub_top_bg.jpg);
+        }
+
+        #sub > div > img {
+            position: absolute;
+            bottom: 0;
+        }
+        #sub > section {
+            overflow: hidden;
+            width: 100%;
+            height: auto;
+        }
+        #sub > section > aside {
+            float: left;
+            width: 176px;
+            height: 650px;
+            background-image: url(../img/sub_aside_bg_line.png);
+            background-repeat: no-repeat;
+            background-position: right;
+        }
+
+        #sub > section > aside > img {
+            margin: 16px;
+        }
+
+        #sub > section > aside > ul {
+            width: 175px;
+            height: 233px;
+            background-image: url(../img/sub_aside_bg_lnb.png);
+            padding-top: 26px;
+            box-sizing: border-box;
+        }
+
+        #sub > section > aside > ul > li {
+            width: 100%;
+            height: 29px;
+            margin-bottom: 6px;
+        }
+
+        #sub > section > aside > ul > li > a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-size: 0;
+        }
+
+
+
+        #sub > section > article {
+            float: left;
+            width: 798px;
+            min-height: 650px;
+            padding-left: 40px;
+            box-sizing: border-box;
+        }
+
+        #sub > section > article > nav {
+        	position : relative;
+            width: 100%;
+            height: 72px;
+            margin-bottom: 40px;
+            border-bottom:  1px solid #c2c2c2;
+            box-sizing: border-box;
+        }
+
+        #sub > section > article > nav > img {
+            margin-top: 30px;
+        }
+        
+        #sub > section > article > nav > p {
+			position: absolute;
+			right: 0;
+			bottom: 4px;
+			color: #8c8c8c;
+			padding-left: 20px;
+			box-sizing: border-box;
+			background-image: url(../img/sub_page_nav_ico.gif);
+			background-repeat: no-repeat;
+			background-position: 10px;
+        }
+        
+        #sub > section > article > nav > p > em {
+		    font-weight: bold;
+		    color: #91BA15;
+		}
+
+        /* 팜스토리소개 */
+        #sub > .cate1 > aside > ul > li:nth-child(1) > a {background-image: url(../img/sub_cate1_lnb1.png);}
+        #sub > .cate1 > aside > ul > li:nth-child(1) > a:hover {background-image: url(../img/sub_cate1_lnb1_ov.png);}
+        #sub > .cate1 > aside > ul > li:nth-child(1).on > a {background-image: url(../img/sub_cate1_lnb1_ov.png);}
+
+        #sub > .cate1 > aside > ul > li:nth-child(2) > a {background-image: url(../img/sub_cate1_lnb2.png);}
+        #sub > .cate1 > aside > ul > li:nth-child(2) > a:hover {background-image: url(../img/sub_cate1_lnb2_ov.png);}
+        #sub > .cate1 > aside > ul > li:nth-child(2).on > a {background-image: url(../img/sub_cate1_lnb2_ov.png);}
+        
+        /* 장보기 */
+        #sub > .cate2 > aside > ul > li:nth-child(1) > a {background-image: url(../img/sub_cate2_lnb1.png);}
+        #sub > .cate2 > aside > ul > li:nth-child(1) > a:hover {background-image: url(../img/sub_cate2_lnb1_ov.png);}
+        #sub > .cate2 > aside > ul > li:nth-child(1).on > a {background-image: url(../img/sub_cate2_lnb1_ov.png);}
+
+        /* 농작물이야기 */
+        #sub > .cate3 > aside > ul > li:nth-child(1) > a {background-image: url(../img/sub_cate3_lnb1.png);}
+        #sub > .cate3 > aside > ul > li:nth-child(1) > a:hover {background-image: url(../img/sub_cate3_lnb1_ov.png);}
+        #sub > .cate3 > aside > ul > li:nth-child(1).on > a {background-image: url(../img/sub_cate3_lnb1_ov.png);}
+
+        #sub > .cate3 > aside > ul > li:nth-child(2) > a {background-image: url(../img/sub_cate3_lnb2.png);}
+        #sub > .cate3 > aside > ul > li:nth-child(2) > a:hover {background-image: url(../img/sub_cate3_lnb2_ov.png);}
+        #sub > .cate3 > aside > ul > li:nth-child(2).on > a {background-image: url(../img/sub_cate3_lnb2_ov.png);}
+
+        #sub > .cate3 > aside > ul > li:nth-child(3) > a {background-image: url(../img/sub_cate3_lnb3.png);}
+        #sub > .cate3 > aside > ul > li:nth-child(3) > a:hover {background-image: url(../img/sub_cate3_lnb3_ov.png);}
+        #sub > .cate3 > aside > ul > li:nth-child(3).on > a {background-image: url(../img/sub_cate3_lnb3_ov.png);}
+
+        /* 이벤트 */
+        #sub > .cate4 > aside > ul > li:nth-child(1) > a {background-image: url(../img/sub_cate4_lnb1.png);}
+        #sub > .cate4 > aside > ul > li:nth-child(1) > a:hover {background-image: url(../img/sub_cate4_lnb1_ov.png);}
+        #sub > .cate4 > aside > ul > li:nth-child(1).on > a {background-image: url(../img/sub_cate4_lnb1_ov.png);}
+
+        /* 커뮤니티 */
+        #sub > .cate5 > aside > ul > li:nth-child(1) > a {background-image: url(../img/sub_cate5_lnb1.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(1) > a:hover {background-image: url(../img/sub_cate5_lnb1_ov.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(1).on > a {background-image: url(../img/sub_cate5_lnb1_ov.png);}
+
+        #sub > .cate5 > aside > ul > li:nth-child(2) > a {background-image: url(../img/sub_cate5_lnb2.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(2) > a:hover {background-image: url(../img/sub_cate5_lnb2_ov.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(2).on > a {background-image: url(../img/sub_cate5_lnb2_ov.png);}
+
+        #sub > .cate5 > aside > ul > li:nth-child(3) > a {background-image: url(../img/sub_cate5_lnb3.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(3) > a:hover {background-image: url(../img/sub_cate5_lnb3_ov.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(3).on > a {background-image: url(../img/sub_cate5_lnb3_ov.png);}
+
+        #sub > .cate5 > aside > ul > li:nth-child(4) > a {background-image: url(../img/sub_cate5_lnb4.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(4) > a:hover {background-image: url(../img/sub_cate5_lnb4_ov.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(4).on > a {background-image: url(../img/sub_cate5_lnb4_ov.png);}
+
+        #sub > .cate5 > aside > ul > li:nth-child(5) > a {background-image: url(../img/sub_cate5_lnb5.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(5) > a:hover {background-image: url(../img/sub_cate5_lnb5_ov.png);}
+        #sub > .cate5 > aside > ul > li:nth-child(5).on > a {background-image: url(../img/sub_cate5_lnb5_ov.png);}

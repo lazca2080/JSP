@@ -68,7 +68,7 @@ public class UserDAO extends DBHelper{
 		
 	}
 	
-	public int checkNick(String uid) {
+	public int checkUid(String uid) {
 		
 		int result = 0;
 		
@@ -76,6 +76,31 @@ public class UserDAO extends DBHelper{
 			conn = getConnection();
 			psmt = conn.prepareStatement("SELECT * FROM `board_user` WHERE `uid`=?");
 			psmt.setString(1, uid);
+			rs   = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = 1;
+			}else {
+				result = 0;
+			}
+			
+			close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public int checkNick(String nick) {
+		
+		int result = 0;
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("SELECT * FROM `board_user` WHERE `nick`=?");
+			psmt.setString(1, nick);
 			rs   = psmt.executeQuery();
 			
 			if(rs.next()) {

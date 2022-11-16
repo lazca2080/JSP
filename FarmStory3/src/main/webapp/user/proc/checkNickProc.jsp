@@ -5,9 +5,9 @@
 <%
 
 	request.setCharacterEncoding("UTF-8");
-	String uid = request.getParameter("uid");
+	String nick = request.getParameter("nick");
 	
-	int result = UserDAO.getinstance().checkUid(uid);
+	int result = UserDAO.getinstance().checkNick(nick);
 	
 	JsonObject json = new JsonObject();
 	json.addProperty("result", result);

@@ -26,14 +26,6 @@
 			
 			let uid = $('input[name=uid]').val();
 			
-			if(uid.match(reUid)){
-				isUidOk = true;
-				$('.uidResult').css('color', 'green').text('사용 가능한 아이디입니다.');
-			}else{
-				isUidOk = false;
-				$('.uidResult').css('color', 'red').text('사용할 수 없는 아이디입니다.');
-			}
-			
 			let jsonData = { "uid":uid }
 			
 			$.ajax({
@@ -43,11 +35,22 @@
 				datatype:'json',
 				success: function(data){
 					
+					console.log(data.result);
+					
+					if(data.result == 1){
+						isUidOk = false;
+						$('.uidResult').css('color', 'green').text('이미 사용중인 아이디입니다.');
+					}else{
+						if(uid.match(reUid)){
+							isUidOk = true;
+							$('.uidResult').css('color', 'green').text('사용 가능한 아이디입니다.');
+						}else{
+							isUidOk = false;
+							$('.uidResult').css('color', 'red').text('사용 할 수 없는 아이디입니다.');
+						}
+					}
 				}
-				
-				
 			});
-			
 		});
 		
 		$('input[name=pass2]').focusout(function(){
@@ -88,13 +91,29 @@
 			
 			let nick = $('input[name=nick]').val();
 			
-			if(nick.match(reNick)){
-				isNickOk = true;
-				$('.nickResult').css('color', 'green').text('사용 가능한 별명입니다.');
-			}else{
-				isNickOk = false;
-				$('.nickResult').css('color', 'red').text('사용할 수 없는 별명입니다.');
-			}
+			let jsonData = { "nick":nick }
+			
+			$.ajax({
+				url:'./proc/checkNickProc.jsp',
+				method:'get',
+				data:jsonData,
+				datatype:'json',
+				success: function(data){
+					
+					if(data.result == 1){
+						isNickOk = false;
+						$('.nickResult').css('color', 'red').text('이미 사용중인 별명입니다.');
+					}else{
+						if(nick.match(reNick)){
+							isNickOk = true;
+							$('.nickResult').css('color', 'green').text('사용 가능한 별명입니다.');
+						}else{
+							isNickOk = false;
+							$('.nickResult').css('color', 'red').text('사용할 수 없는 별명입니다.');
+						}
+					}
+				}
+			});
 		});
 		
 		$('input[name=email]').focusout(function(){

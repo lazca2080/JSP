@@ -1,5 +1,9 @@
+<%@page import="kr.co.FarmStory2.bean.UserBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<%
+	UserBean ub = (UserBean)session.getAttribute("sessuser");
+%>
         <main>
             <div class="slider">
                 <ul>

@@ -1,4 +1,8 @@
+<%@page import="bean.UserBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	UserBean ub = (UserBean)session.getAttribute("sess");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,8 +46,13 @@
             <img src="/FarmStory3/img/head_menu_badge.png" alt="badge">
             <ul class="reg">
                 <li><a href="/FarmStory3/">HOME |</a></li>
+                <% if(ub == null) { %>
                 <li><a href="/FarmStory3/user/login.jsp">로그인 |</a></li>
                 <li><a href="/FarmStory3/user/terms.jsp">회원가입 |</a></li>
+                <% }else { %>
+                <li><a href="#"><strong><%= ub.getNick() %>님</strong> |</a></li>
+                <li><a href="/FarmStory3/user/proc/logoutProc.jsp">로그아웃 |</a></li>
+				<% } %>                
                 <li><a href="#">고객센터</a></li>
             </ul>
             <ul class="gnb">

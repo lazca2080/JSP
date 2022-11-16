@@ -17,7 +17,7 @@
                 </aside>
                 <article>
                     <nav>
-                        <img src="/FarmStory2/img/sub_nav_tit_cate3_tit1.png" alt="농작물이야기"/>
+                        <img src="/FarmStory2/img/sub_nav_tit_cate3_<%= cate %>.png" alt="농작물이야기"/>
                         <p>
                             HOME > 농작물이야기 > 
                             

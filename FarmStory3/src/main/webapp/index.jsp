@@ -127,8 +127,8 @@
                         </p>
                     </div>
                     <div>
-                        <a href="#"><img src="/FarmStory3/img/main_sub2_cs_bt1.png" alt=""></a>
-                        <a href="#"><img src="/FarmStory3/img/main_sub2_cs_bt2.png" alt=""></a>
+                        <a href="/FarmStory3/board/list.jsp?group=community&cate=qna"><img src="/FarmStory3/img/main_sub2_cs_bt1.png" alt=""></a>
+                        <a href="/FarmStory3/board/list.jsp?group=community&cate=faq"><img src="/FarmStory3/img/main_sub2_cs_bt2.png" alt=""></a>
                         <a href="#"><img src="/FarmStory3/img/main_sub2_cs_bt3.png" alt=""></a>
                     </div>
                 </div>

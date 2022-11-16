@@ -103,7 +103,7 @@
             margin-right: 5px;
         }
 
-        header > .reg > li > a {}
+        header > .reg > li > a > strong { font-weight: bold; }
 
         header > .logo {
             position: absolute;

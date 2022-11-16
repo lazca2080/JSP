@@ -1,8 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String success = request.getParameter("success");
+%>
+<script>
+	let success = "<%= success %>";
+	
+	if(success == 100){
+		alert('아이디 또는 비밀번호가 틀렸습니다.');
+	}
+	
+</script>
 <main id="user">
     <section class="login">
-        <form action="#" method="post">
+        <form action="/FarmStory2/user/proc/loginProc.jsp" method="post">
             <table>
                 <tr>
                     <td><img src="./img/login_ico_id.png" alt="아이디"></td>

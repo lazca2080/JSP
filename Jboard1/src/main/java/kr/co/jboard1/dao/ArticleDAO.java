@@ -75,12 +75,12 @@ public class ArticleDAO {
 	public void insertFile(int parent, String newName, String fname) {
 		try{
 			logger.info("insertFile");
+			
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_FILE);
 			psmt.setInt(1, parent);
 			psmt.setString(2, newName);
 			psmt.setString(3, fname);
-			
 			psmt.executeUpdate();
 			
 			conn.close();

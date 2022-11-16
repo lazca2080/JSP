@@ -29,7 +29,8 @@
 	ub.setAddr1(addr1);
 	ub.setAddr2(addr2);
 	ub.setRegip(regip);
-	ub.setRdate(rdate);
 	
 	UserDAO.getinstance().insertUser(ub);
+	
+	response.sendRedirect("/FarmStory2/user/login.jsp");
 %>

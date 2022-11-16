@@ -122,10 +122,10 @@
 			
 			if(email.match(reEmail)){
 				isEmailOk = true;
-				$('.emailResult').css('color', 'green').text('사용 가능한 별명입니다');
+				$('.emailResult').css('color', 'green').text('사용 가능한 이메일입니다');
 			}else{
 				isEmailOk = false;
-				$('.emailResult').css('color', 'red').text('사용할 수 없는 별명입니다');
+				$('.emailResult').css('color', 'red').text('사용할 수 없는 이메일입니다');
 			}
 		});
 		
@@ -135,10 +135,10 @@
 			
 			if(hp.match(reHp)){
 				isHpOk = true;
-				$('.hpResult').css('color', 'green').text('사용 가능한 이메일입니다.');
+				$('.hpResult').css('color', 'green').text('사용 가능한 번호입니다.');
 			}else{
 				isHpOk = false;
-				$('.hpResult').css('color', 'red').text('사용할 수 없는 이메일입니다.');
+				$('.hpResult').css('color', 'red').text('사용할 수 없는 번호입니다.');
 			}
 		});
 		
@@ -186,7 +186,7 @@
 </script>
 <main id="user">
     <section class="register">
-        <form action="#" method="post">
+        <form action="/FarmStory3/user/proc/registerProc.jsp" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>

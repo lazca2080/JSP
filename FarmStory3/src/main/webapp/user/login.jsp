@@ -1,8 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String code = request.getParameter("code");
+%>
 <%@ include file="/_header.jsp" %>
+<script>
+	let code = "<%= code %>";
+	if(code == "100"){
+		alert('로그인 정보가 맞지 않습니다.');
+	}
+</script>
 <main id="user">
     <section class="login">
-        <form action="#" method="post">
+        <form action="/FarmStory3/user/proc/checkLoginProc.jsp" method="post">
             <table>
                 <tr>
                     <td><img src="./img/login_ico_id.png" alt="아이디"></td>

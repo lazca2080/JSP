@@ -7,7 +7,7 @@ public class UserBean {
 	private String nick;
 	private String email;
 	private String hp;
-	private int  grade;
+	private String grade;
 	private String zip;
 	private String addr1;
 	private String addr2;
@@ -50,14 +50,11 @@ public class UserBean {
 	public void setHp(String hp) {
 		this.hp = hp;
 	}
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
 	public void setGrade(String grade) {
-		this.grade = Integer.parseInt(grade);
+		this.grade = grade;
 	}
 	public String getZip() {
 		return zip;
@@ -89,6 +86,7 @@ public class UserBean {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	
 	
 	
 }

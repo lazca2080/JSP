@@ -17,10 +17,9 @@
 	pageContext.include("/board/_"+group+".jsp");
 %>
 <script>
-	
 	$(function(){
 		
-		$('.btnComplete').click(function(){
+		$('.commentForm > form').submit(function(){
 			
 			let uid     = "<%= uid %>";
 			let parent  = "<%= no %>";
@@ -65,8 +64,6 @@
 			});
 			
 		});		
-		
-		
 	});
 
 </script>

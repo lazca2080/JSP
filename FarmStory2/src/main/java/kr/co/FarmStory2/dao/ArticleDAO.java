@@ -82,7 +82,7 @@ public class ArticleDAO extends DBHelper{
 	
 	public int insertComment(ArticleBean ab) {
 		
-		ArticleBean ab = null;
+		int result = 0;
 		
 		try {
 			logger.info("insertComment...");

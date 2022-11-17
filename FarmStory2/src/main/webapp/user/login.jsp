@@ -1,16 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/_header.jsp" %>
+<%@ include file="./_header.jsp" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String success = request.getParameter("success");
 %>
 <script>
 	let success = "<%= success %>";
-	
-	if(success == 100){
-		alert('아이디 또는 비밀번호가 틀렸습니다.');
+	if(success == "100"){
+		alert('일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인 하세요');
+	}else if(success == "101"){
+		alert('먼저 로그인을 하세요');
 	}
-	
 </script>
 <main id="user">
     <section class="login">

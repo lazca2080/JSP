@@ -67,11 +67,20 @@ public class Sql {
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "
 												+ "JOIN `board_user` AS b "
 												+ "ON a.uid = b.uid "
-												+ "WHERE `parent`=? ORDER BY `no` ASC";
+												+ "WHERE `parent`=? AND `cate`=? ORDER BY `no` ASC";
 	
 	public static final String SELECT_COMMENT_LATEST = "SELECT a.*, b.nick FROM `board_article` AS a "
 														+ "JOIN `board_user` AS b USING (`uid`) "
 														+ "WHERE `parent` != 0 AND `cate`=? ORDER BY `no` DESC LIMIT 1 ";
+	
+	
+	public static final String SELECT_LATESTS = "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? AND `title` IS NOT NULL ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? AND `title` IS NOT NULL ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? AND `title` IS NOT NULL ORDER BY `no` DESC LIMIT 5)";
+	
+	public static final String SELECT_LATEST = "SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
 	
 	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() WHERE `no`=?";
 	

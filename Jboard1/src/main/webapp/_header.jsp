@@ -9,9 +9,7 @@
 		response.sendRedirect("/Jboard1/user/login.jsp?success=101");
 		return;
 	}
-	
-	%>
-
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>

@@ -35,13 +35,14 @@
             <a href="/FarmStory2/index.jsp" class="logo"><img src="/FarmStory2/img/logo.png" alt="로고"/></a>
             <p>
                 <a href="/FarmStory2/">HOME |</a>
-                <% if(sessuser == null){ %>
+                <% if(sessuser == null) { %>
                 <a href="/FarmStory2/user/login.jsp">로그인 |</a>
                 <a href="/FarmStory2/user/register.jsp">회원가입 |</a>
+                <a href="#">고객센터</a>
                 <% }else { %>
                 <a href="/FarmStory2/user/proc/logout.jsp">로그아웃 |</a>
-                <% } %>
                 <a href="#">고객센터</a>
+                <% } %>
             </p>
             <img src="/FarmStory2/img/head_txt_img.png" alt="3만원 이상 무료배송"/>
             

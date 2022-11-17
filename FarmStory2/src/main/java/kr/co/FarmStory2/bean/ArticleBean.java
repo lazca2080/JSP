@@ -23,7 +23,6 @@ public class ArticleBean {
 	private String oriName;
 	private int download;
 	
-	
 	public String getFname() {
 		return fname;
 	}

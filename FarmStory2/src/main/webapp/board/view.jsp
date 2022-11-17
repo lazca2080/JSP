@@ -8,31 +8,36 @@
 	String group = request.getParameter("group");
 	String cate  = request.getParameter("cate");
 	String no    = request.getParameter("no");
-	String regip = request.getRemoteAddr();
-	String uid   = sessuser.getUid();
-	String nick  = sessuser.getNick();
 	
 	ArticleBean ab = ArticleDAO.getInstance().selectArticle(no);
 	
 	pageContext.include("/board/_"+group+".jsp");
+
+	if(sessuser == null){
+		
+	}
 %>
 <script>
 	$(function(){
 		
-		$('.commentForm > form').submit(function(){
+		// 댓글 작성
+		$('.commentForm > form').submit(function(e){
 			
-			let uid     = "<%= uid %>";
-			let parent  = "<%= no %>";
-			let cate    = "<%= cate %>";
-			let nick    = "<%= nick %>";
-			let content = $('textarea[name=content]').val();
+			e.preventDefault();
+			
+			let uid     = $(this).children('input[name=uid]').val();
+			let content = $(this).children('textarea[name=content]').val();
+			let cate    = $(this).children('input[name=cate]').val();
+			let group   = $(this).children('input[name=group]').val();
+			let no      = $(this).children('input[name=no]').val();
+			
+			if(uid.equals('nobody')) {
 			
 			let jsonData = {
 					"uid" : uid,
-					"regip" : regip,
-					"parent" : parent,
+					"content" : content,
 					"cate" : cate,
-					"content" : content
+					"no" : no,
 			}
 			
 			$.ajax({
@@ -41,30 +46,48 @@
 				data:jsonData,
 				dataType:'json',
 				success: function(data){
+					let tags = "<article>";
+					   tags += "<span class='nick'>"+data.nick+" </span>";
+					   tags += "<span class='date'>"+data.rdate+"</span>";
+					   tags += "<p class='content'>"+data.content+"</p>";
+					   tags += "<div>";
+					   tags += "<a href='#'>삭제 </a>";
+					   tags += "<a href='#'>수정</a>";
+					   tags += "</div>";
+					   tags += "</article>";
 					
-					if(data.result == 1){
-						
-						let tags = "<span class='nick'>"+nick+"</span>";
-						   tags += "<span class='date'>"++"</span>";
-						
-                        <span class="nick">길동이</span>
-                        <span class="date">20-05-20</span>
-                        <p class="content">
-                            댓글 샘플입니다.
-                        </p>
-                        <div>
-                            <a href="#">삭제</a>
-                            <a href="#">수정</a>
-                        </div>
-						
-					}else{
-						alert('등록 실패');
-					}
+					$('.commentList > .empty').hide();   
+					$('.commentList').append(tags);
 				}
 			});
-			
-		});		
+		});
+		
+		let cate    = $('.commentForm > form').children('input[name=cate]').val();
+		let group   = $('.commentForm > form').children('input[name=group]').val();
+		let no      = $('.commentForm > form').children('input[name=no]').val();
+		
+		let url = "/FarmStory2/board/proc/commentListProc.jsp?group="+group+"&cate="+cate+"&no="+no		
+		$.get(url, function(data){
+			for(let list of data){
+				let tags = "<article>";
+				   tags += "<span class='nick'>"+list.nick+" </span>";
+				   tags += "<span class='date'>"+list.rdate.substring(2,10)+"</span>";
+				   tags += "<p class='content'>"+list.content+"</p>";
+				   tags += "<div>";
+				   tags += "<a href='#'>삭제 </a>";
+				   tags += "<a href='#'>수정</a>";
+				   tags += "</div>";
+				   tags += "</article>";
+				   
+			    $('.commentList > .empty').hide(); 
+				$('.commentList').append(tags);
+			}
+		});
+		}else{
+			alert('로그인이 필요합니다.');
+		}
 	});
+	
 
 </script>
             <main id="Board">
@@ -94,18 +117,6 @@
                     <!-- 댓글목록 -->
                     <section class="commentList">
                         <h3>댓글목록</h3>
-                        <article>
-                            <span class="nick">길동이</span>
-                            <span class="date">20-05-20</span>
-                            <p class="content">
-                                댓글 샘플입니다.
-                            </p>
-                            <div>
-                                <a href="#">삭제</a>
-                                <a href="#">수정</a>
-                            </div>
-                        </article>
-
                         <p class="empty">등록된 댓글이 없습니다.</p>
 
                     </section>
@@ -113,11 +124,19 @@
                     <!-- 댓글쓰기 -->
                     <section class="commentForm">
                         <h3>댓글쓰기</h3>
-                        <form action="./proc/commentWriteProc.jsp?group=<%= group %>&cate=<%= cate %>&no=<%= no %>">
+                        <form action="#">
+                        	<input type="hidden" name="group" value="<%= group %>">
+                        	<input type="hidden" name="cate" value="<%= cate %>">
+                        	<input type="hidden" name="no" value="<%= no %>">
+                        	<% if(sessuser != null) { %>
+                        	<input type="hidden" name="uid" value="<%= sessuser.getUid() %>">
+                        	<% }else { %>
+                        	<input type="hidden" name="uid" value="nobody">
+                        	<% } %>
                             <textarea name="content"></textarea>
                             <div>
                                 <a href="/FarmStory2/board/list.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnCanvel">취소</a>
-                                <input type="sumit" value="작성완료" class="btn btnComplete">
+                                <input type="submit" value="작성완료" class="btn btnComplete">
                             </div>
                         </form>
                     </section>

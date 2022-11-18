@@ -1,7 +1,7 @@
+<%@page import="bean.BookBean"%>
 <%@page import="config.DBCP"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="bean.BookBean"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -20,11 +20,11 @@ request.setCharacterEncoding("UTF-8");
 		ResultSet rs = psmt.executeQuery();
 		
 		if(rs.next()){
-			book = new BookBean();
-			book.setBookid(rs.getInt(1));
-			book.setBookname(rs.getString(2));
-			book.setPub(rs.getString(3));
-			book.setPrice(rs.getInt(4));
+	book = new BookBean();
+	book.setBookid(rs.getInt(1));
+	book.setBookname(rs.getString(2));
+	book.setPub(rs.getString(3));
+	book.setPrice(rs.getInt(4));
 		}
 		
 		conn.close();

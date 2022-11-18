@@ -12,10 +12,6 @@
 	ArticleBean ab = ArticleDAO.getInstance().selectArticle(no);
 	
 	pageContext.include("/board/_"+group+".jsp");
-
-	if(sessuser == null){
-		
-	}
 %>
 <script>
 	$(function(){
@@ -30,8 +26,6 @@
 			let cate    = $(this).children('input[name=cate]').val();
 			let group   = $(this).children('input[name=group]').val();
 			let no      = $(this).children('input[name=no]').val();
-			
-			if(uid.equals('nobody')) {
 			
 			let jsonData = {
 					"uid" : uid,
@@ -60,6 +54,7 @@
 					$('.commentList').append(tags);
 				}
 			});
+			
 		});
 		
 		let cate    = $('.commentForm > form').children('input[name=cate]').val();
@@ -83,12 +78,7 @@
 				$('.commentList').append(tags);
 			}
 		});
-		}else{
-			alert('로그인이 필요합니다.');
-		}
 	});
-	
-
 </script>
             <main id="Board">
                 <section class="View">

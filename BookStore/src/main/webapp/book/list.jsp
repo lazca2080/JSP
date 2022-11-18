@@ -1,14 +1,13 @@
+<%@page import="bean.BookBean"%>
 <%@page import="config.DBCP"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="bean.BookBean"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-
-	request.setCharacterEncoding("UTF-8");
+request.setCharacterEncoding("UTF-8");
 
 	List<BookBean> books = new ArrayList<>();
 	
@@ -20,13 +19,13 @@
 		ResultSet rs = stmt.executeQuery("SELECT * FROM `book`");
 		
 		while(rs.next()){
-			BookBean book = new BookBean();
-			book.setBookid(rs.getInt(1));
-			book.setBookname(rs.getString(2));
-			book.setPub(rs.getString(3));
-			book.setPrice(rs.getInt(4));
-			
-			books.add(book);
+ 	BookBean book = new BookBean();
+	book.setBookid(rs.getInt(1));
+	book.setBookname(rs.getString(2));
+	book.setPub(rs.getString(3));
+	book.setPrice(rs.getInt(4));
+	
+	books.add(book);
 		}
 		conn.close();
 		stmt.close();
@@ -56,7 +55,9 @@
 				<th>가격</th>
 				<th>관리</th>
 			</tr>
-			<% for(BookBean book : books) {	%>
+			<%
+			for(BookBean book : books) {
+			%>
 			<tr>
 				<td><%= book.getBookid() %></td>
 				<td><%= book.getBookname() %></td>

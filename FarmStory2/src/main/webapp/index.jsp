@@ -51,7 +51,7 @@
 
             <div class="latest">
                 <div>
-                    <a href="#"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
+                    <a href="/FarmStory2/board/list.jsp?group=croptalk&cate=grow"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
                     <img src="./img/main_latest1_img.jpg" alt="이미지"/>
                     <table border="0">
                   	   	<% 
@@ -67,7 +67,7 @@
                     </table>
                 </div>
                 <div>
-                    <a href="#"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
+                    <a href="/FarmStory2/board/list.jsp?group=croptalk&cate=school"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
                     <img src="./img/main_latest2_img.jpg" alt="이미지"/>
                     <table border="0">
 			    	   	<% 
@@ -83,7 +83,7 @@
                     </table>
                 </div>
                 <div>
-                    <a href="#"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
+                    <a href="/FarmStory2/board/list.jsp?group=croptalk&cate=story"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
                     <img src="./img/main_latest3_img.jpg" alt="이미지"/>
                     <table border="0">
 						<% 
@@ -114,8 +114,8 @@
                         </p>
                     </div>
                     <div class="btns">
-                        <a href="#"><img src="./img/main_sub2_cs_bt1.png" alt="1:1 고객문의"></a>
-                        <a href="#"><img src="./img/main_sub2_cs_bt2.png" alt="자주묻는질문"></a>
+                        <a href="/FarmStory2/board/list.jsp?group=community&cate=qna"><img src="./img/main_sub2_cs_bt1.png" alt="1:1 고객문의"></a>
+                        <a href="/FarmStory2/board/list.jsp?group=community&cate=faq"><img src="./img/main_sub2_cs_bt2.png" alt="자주묻는질문"></a>
                         <a href="#"><img src="./img/main_sub2_cs_bt3.png" alt="배송조회"></a>
                     </div>
                 </div>

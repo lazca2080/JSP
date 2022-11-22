@@ -66,7 +66,7 @@
                         <input type="text" name="zip" id="zip" readonly="readonly"  placeholder="우편번호 입력">
                         <button type="button" onclick="zipcode()"><img src="/Jboard1/image/chk_post.gif" alt="우편번호찾기"></button>
                         <input type="text" name="addr1" id="addr1" placeholder="주소 검색">
-                        <input type="text"name="addr2" id="addr2" placeholder="상제주소 입력">
+                        <input type="text" name="addr2" id="addr2" placeholder="상제주소 입력">
                     </td>
                 </tr>
             </table>

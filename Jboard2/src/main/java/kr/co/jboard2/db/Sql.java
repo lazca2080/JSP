@@ -20,7 +20,9 @@ public class Sql {
 	public static final String SELECT_USER = "SELECT * FROM `board_user` WHERE `uid`=? and `pass`=SHA2(?, 256)";
 	public static final String SELECT_COUNT_UID = "SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=?";
 	public static final String SELECT_COUNT_NICK = "SELECT COUNT(`nick`) FROM `board_user` WHERE `nick`=?";
-	
+	public static final String SELECT_USER_FOR_FINDID = "SELECT * FROM `board_user` WHERE `name`=? AND `email`=?";
+	public static final String SELECT_USER_FOR_FINDPW = "SELECT * FROM `board_user` WHERE `uid`=? AND `email`=?";
+	public static final String UPDATE_USER_PASSWORD = "UPDATE `board_user` SET `pass`=SHA2(?,256) WHERE `uid`=? ";
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set "
 												+ "`title`=?,"
@@ -50,8 +52,8 @@ public class Sql {
 												+ "AS a JOIN `board_user` "
 												+ "AS b ON a.uid = b.uid "
 												+ "WHERE `parent` = 0 "
-												+ "ORDER BY a.`no` desc "
-												+ "LIMIT ?, 10";
+												+ "ORDER BY a.`no` desc";
+												/*+ "LIMIT ?, 10";*/
 	
 	public static final String SELECT_ARTICLE = "SELECT a.*, b.fno, b.parent AS pno, b.newName, b.oriName, b.download "
 												+ "FROM `board_article` AS a "
@@ -70,7 +72,7 @@ public class Sql {
 														+ "JOIN `board_user` AS b USING (`uid`) "
 														+ "WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1 ";
 	
-	public static final String SELECT_FINDID = "SELECT count(`uid`) FROM `board_user` WHERE `name`=?,`email`=?";
+	public static final String SELECT_FINDID = "SELECT count(`uid`) FROM `board_user` WHERE `name`=? AND `email`=?";
 	
 	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() WHERE `no`=?";
 	

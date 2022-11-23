@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
 <script>
-	let success = ${success};
+	let success = '${success}';
 	
 	if(success == 100){
 		alert('로그인 실패!');
+	}else if(success == 101){
+		alert('세션이 초기화되었습니다.\n다시 로그인해주세요');
 	}
 </script>
 <main id="user">

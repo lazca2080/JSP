@@ -1,5 +1,53 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
+<script src="/Jboard2/js/validation.js"></script>
+<script>
+$(function(){
+	let rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
+	//비밀번호 검사하기
+	$('.btnNext').click(function(e){
+		e.preventDefault();
+		
+		let pass1 = $('input[name=pass1]').val();
+		let pass2 = $('input[name=pass2]').val();
+		// let uid   = $('#uid').text();
+		let uid   = '${sessUserForPw.uid}';
+		
+		if(pass1 == pass2){
+			
+			if(pass2.match(rePass)){
+				isPassOk = true;
+				
+				let jsonData = {
+					"uid":uid,
+					"pass":pass2
+				}
+				
+				$.ajax({
+					url:'/Jboard2/user/findPwChange.do',
+					method:'post',
+					data:jsonData,
+					dataType:'json',
+					success: function(data){
+						
+						if(data.result > 0){
+							alert('비밀번호가 변경되었습니다.\n로그인 하시기 바랍니다.');
+							location.href = "/Jboard2/user/login.do";
+						}
+					}
+				});
+				
+			}else{
+				$('.resultPass').css('color', 'red').text('숫자,영문,특수문자 포함 5자리이상이여야 합니다.');
+			}
+		}else{
+			$('.resultPass').css('color', 'red').text('비밀번호가 일치하지 않습니다.');
+		}
+		
+		
+	});
+});
+</script>
 <main id="user">
     <section class="find findPwChange">
         <form action="#">
@@ -7,18 +55,19 @@
                 <caption>비밀번호 변경</caption>                        
                 <tr>
                     <td>아이디</td>
-                    <td>honggildong</td>
+                    <td>${sessUserForPw.uid}</td>
                 </tr>
                 <tr>
                     <td>새 비밀번호</td>
                     <td>
-                        <input type="email" name="pass1" placeholder="새 비밀번호 입력"/>
+                        <input type="password" name="pass1" placeholder="새 비밀번호 입력"/>
+                        <span class="resultPass"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>새 비밀번호 확인</td>
                     <td>
-                        <input type="email" name="pass1" placeholder="새 비밀번호 입력"/>
+                        <input type="password" name="pass2" placeholder="새 비밀번호 입력"/>
                     </td>
                 </tr>
             </table>                                        
@@ -30,8 +79,8 @@
         </p>
 
         <div>
-            <a href="./login.jsp" class="btn btnCancel">취소</a>
-            <a href="./login.jsp" class="btn btnNext">다음</a>
+            <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
+            <a href="/Jboard2/user/login.do" class="btn btnNext">다음</a>
         </div>
     </section>
 </main>

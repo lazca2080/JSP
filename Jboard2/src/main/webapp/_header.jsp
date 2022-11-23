@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
         <header>
             <h3>Board System v1.0</h3>
             <p>
-                <span>홍길동</span>님 반갑습니다.
-                <a href="/Jboard2/user/login.do">[로그아웃]</a>
+                <span>${sessuser.nick}</span>님 반갑습니다.
+                <a href="/Jboard2/user/logout.do">[로그아웃]</a>
             </p>
         </header>

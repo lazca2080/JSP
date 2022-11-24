@@ -3,7 +3,7 @@
 <main id="board">
     <section class="write">
         <form action="/Jboard2/write.do" method="post">
-        	<input type="hidden" name="uid" value="${sessuser.uid}">
+        	<input type="hidden" name="uid" value="${sessUser.uid}">
             <table border="0">
                 <caption>글쓰기</caption>
                 <tr>

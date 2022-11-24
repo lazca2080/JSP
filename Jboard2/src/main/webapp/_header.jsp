@@ -13,7 +13,7 @@
         <header>
             <h3>Board System v1.0</h3>
             <p>
-                <span>${sessuser.nick}</span>님 반갑습니다.
+                <span>${sessUser.nick}</span>님 반갑습니다.
                 <a href="/Jboard2/user/logout.do">[로그아웃]</a>
             </p>
         </header>

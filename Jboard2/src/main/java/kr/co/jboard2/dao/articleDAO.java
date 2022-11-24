@@ -72,15 +72,16 @@ public class articleDAO {
 		return vo;
 	}
 	
-	public List<ArticleVO> selectArticles() {
+	public List<ArticleVO> selectArticles(int limitStart) {
 		
 		List<ArticleVO> articles = new ArrayList<>();
 		
 		try {
 			logger.debug("selectArticles...");
 			Connection conn = DBCP.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_ARTICLES);
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
+			psmt.setInt(1, limitStart);
+			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()) {
 				ArticleVO vo = new ArticleVO();
@@ -95,7 +96,7 @@ public class articleDAO {
 			}
 			
 			conn.close();
-			stmt.close();
+			psmt.close();
 			rs.close();
 			
 		} catch (Exception e) {
@@ -105,28 +106,9 @@ public class articleDAO {
 		return articles;
 	}
 
-	public int selectCountTotal() {
-		
-		int total = 0;
-		
-		try {
-			logger.debug("selectCountTotal...");
-			Connection conn = DBCP.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
-			
-			if(rs.next()) {
-				total = rs.getInt(1);
-			}
-			
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		
-		return total;
-	}
-
 	public PagenumVO pageNum(String pg) {
+		
+		logger.debug("pageNum...");
 		
 		int limitStart = 0;       // SQL Limit ?, 10의 ?값 시작값
 		int currentPg = 1;        // 현재 페이지 값 로그인페이지에서 넘어올시 첫화면으로 표시하기 위해 1값
@@ -138,7 +120,23 @@ public class articleDAO {
 		int pageStartNum = 0;     // 이전 or 다음 버튼 클릭시 시작되는 페이지 그룹 번호
 		
 		// 전체 게시물 갯수 구하기
-		total = dao.selectCountTotal();
+		try {
+			logger.debug("selectCountTotal...");
+			Connection conn = DBCP.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+			conn.close();
+			stmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		
 		// 페이지 마지막 번호 계산
 		if(total % 10 == 0){
@@ -165,7 +163,7 @@ public class articleDAO {
 		}
 		
 		// 페이지 시작 번호 계산
-		pageStartNum = total - limitStart;
+		pageStartNum = (total - limitStart)+1;
 		
 		PagenumVO vo = new PagenumVO();
 		vo.setLimitStart(limitStart);

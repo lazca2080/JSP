@@ -9,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.jboard2.service.article.ArticleService;
 import kr.co.jboard2.vo.ArticleVO;
 import kr.co.jboard2.vo.PagenumVO;
+import kr.co.jboard2.vo.UserVO;
 
 @WebServlet("/list.do")
 public class ListController extends HttpServlet{
@@ -30,9 +32,10 @@ public class ListController extends HttpServlet{
 		String pg = req.getParameter("pg");
 		
 		PagenumVO vo = service.pageNum(pg);
-
+		req.setAttribute("vo", vo);
+		
 		// 현재 페이지 게시물 가져오기
-		List<ArticleVO> articles = service.selectArticles();
+		List<ArticleVO> articles = service.selectArticles(vo.getLimitStart());
 		req.setAttribute("articles", articles);
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");

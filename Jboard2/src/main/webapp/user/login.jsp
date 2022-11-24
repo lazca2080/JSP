@@ -8,6 +8,8 @@
 	}else if(success == 101){
 		alert('세션이 초기화되었습니다.\n다시 로그인해주세요');
 	}
+	
+	
 </script>
 <main id="user">
     <section class="login">

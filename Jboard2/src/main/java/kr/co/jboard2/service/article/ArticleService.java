@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.co.jboard2.dao.articleDAO;
-import kr.co.jboard2.dao.userDAO;
 import kr.co.jboard2.vo.ArticleVO;
 import kr.co.jboard2.vo.PagenumVO;
 
@@ -26,8 +25,8 @@ public enum ArticleService {
 		return dao.selectArticle(no);
 	}
 	
-	public List<ArticleVO> selectArticles() {
-		return dao.selectArticles();
+	public List<ArticleVO> selectArticles(int limitStart) {
+		return dao.selectArticles(limitStart);
 	}
 	
 	public void updateArticle() {}

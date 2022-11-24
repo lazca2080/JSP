@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +30,6 @@ public class LoginController extends HttpServlet{
 		String success = req.getParameter("success");
 		req.setAttribute("success", success);
 		
-		HttpSession session = req.getSession();
-		session.removeAttribute("sessUserForId");
-		session.removeAttribute("sessUserForPw");
-		
 		RequestDispatcher dispatcher =	req.getRequestDispatcher("/user/login.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -42,19 +39,32 @@ public class LoginController extends HttpServlet{
 		
 		String uid  = req.getParameter("uid");
 		String pass = req.getParameter("pass");
+		String auto = req.getParameter("auto");
 		
 		UserVO vo = service.selectUser(uid, pass);
 		
 		if(vo != null) {
 			// 회원이 맞을경우
 			HttpSession session = req.getSession();
-			session.setAttribute("sessuser", vo);
-			resp.sendRedirect("/Jboard2/list.do");
+			session.setAttribute("sessUser", vo);
+			
+			if(auto != null) {
+				
+				String sessId = session.getId();
+				
+				// 쿠키 생성
+				Cookie cookie = new Cookie("SESSID", sessId);
+				cookie.setPath("/");
+				cookie.setMaxAge(60*60*24*3);
+				resp.addCookie(cookie);
+				
+				// sessId 데이터베이스 저장
+				service.updateUserForSession(uid, sessId);
+			}
+			resp.sendRedirect("/Jboard2/list.do?pg=1");
 		}else {
 			//회원이 아닐경우
 			resp.sendRedirect("/Jboard2/user/login.do?success=100");
 		}
-		
 	}
-
 }

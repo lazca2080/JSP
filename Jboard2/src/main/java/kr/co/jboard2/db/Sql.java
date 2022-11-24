@@ -23,6 +23,10 @@ public class Sql {
 	public static final String SELECT_USER_FOR_FINDID = "SELECT * FROM `board_user` WHERE `name`=? AND `email`=?";
 	public static final String SELECT_USER_FOR_FINDPW = "SELECT * FROM `board_user` WHERE `uid`=? AND `email`=?";
 	public static final String UPDATE_USER_PASSWORD = "UPDATE `board_user` SET `pass`=SHA2(?,256) WHERE `uid`=? ";
+	public static final String UPDATE_USER_FOR_SESSION = "UPDATE `board_user` SET `sessId`=?, `sessLimitDate` = DATE_ADD(NOW(),INTERVAL 3 DAY) WHERE `uid`=?";
+	public static final String UPDATE_USER_FOR_SESSION_OUT = "UPDATE `board_user` SET `sessId`=NULL, `sessLimitDate`=NULL WHERE `uid`=?";
+	public static final String UPDATE_USER_FOR_SESS_LIMIT_DATE = "UPDATE `board_user` SET `sessLimitDate` = DATE_ADD(NOW(),INTERVAL 3 DAY) WHERE `sessId`=?";
+	
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set "
 												+ "`title`=?,"
@@ -52,8 +56,8 @@ public class Sql {
 												+ "AS a JOIN `board_user` "
 												+ "AS b ON a.uid = b.uid "
 												+ "WHERE `parent` = 0 "
-												+ "ORDER BY a.`no` desc";
-												/*+ "LIMIT ?, 10";*/
+												+ "ORDER BY a.`no` desc "
+												+ "LIMIT ?, 10";
 	
 	public static final String SELECT_ARTICLE = "SELECT a.*, b.fno, b.parent AS pno, b.newName, b.oriName, b.download "
 												+ "FROM `board_article` AS a "
@@ -73,6 +77,8 @@ public class Sql {
 														+ "WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1 ";
 	
 	public static final String SELECT_FINDID = "SELECT count(`uid`) FROM `board_user` WHERE `name`=? AND `email`=?";
+	
+	public static final String SELECT_USER_BY_SESSID = "SELECT * FROM `board_user` WHERE `sessId`=? AND `sessLimitDate` > NOW()";
 	
 	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() WHERE `no`=?";
 	

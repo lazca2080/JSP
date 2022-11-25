@@ -13,34 +13,65 @@ import org.slf4j.LoggerFactory;
 import kr.co.jboard2.db.DBCP;
 import kr.co.jboard2.db.Sql;
 import kr.co.jboard2.vo.ArticleVO;
-import kr.co.jboard2.vo.PagenumVO;
+import kr.co.jboard2.vo.FileVO;
 
 public class articleDAO {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	private articleDAO dao;
 	
-	public void insertArticle(ArticleVO vo) {
+	public int insertArticle(ArticleVO vo) {
+		
+		int parent = 0;
 		
 		try {
 			logger.debug("insertArticle...");
+			
 			Connection conn = DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
+			Statement stmt = conn.createStatement();
 			psmt.setString(1, vo.getTitle());
 			psmt.setString(2, vo.getContent());
-			psmt.setInt(3, vo.getFile());
+			psmt.setInt(3, vo.getFname() == null ? 0 : 1);
 			psmt.setString(4, vo.getUid());
 			psmt.setString(5, vo.getRegip());
 			
 			psmt.executeUpdate();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
+			conn.commit();
+			
+			if(rs.next()) {
+				parent = rs.getInt(1);
+			}
 			
 			conn.close();
 			psmt.close();
+			rs.close();
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		
+		return parent;
+		
+	}
+	
+	public void insertFile(int parent, String newName, String fname) {
+		try {
+			logger.debug("insertFile...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_FILE);
+			psmt.setInt(1, parent);
+			psmt.setString(2, newName);
+			psmt.setString(3, fname);
+			
+			psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 	}
 	
 	public ArticleVO selectArticle(String no) {
@@ -57,6 +88,7 @@ public class articleDAO {
 			
 			if(rs.next()) {
 				vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
 				vo.setTitle(rs.getString(5));
 				vo.setContent(rs.getString(6));
 				vo.setFile(rs.getInt(7));
@@ -106,18 +138,63 @@ public class articleDAO {
 		return articles;
 	}
 
-	public PagenumVO pageNum(String pg) {
+	public FileVO selectFile(String no) {
+		
+		FileVO vo = null;
+		
+		try {
+			logger.debug("selectFile...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_FILE);
+			psmt.setString(1, no);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new FileVO();
+				vo.setFno(rs.getInt(1));
+				vo.setParent(rs.getInt(2));
+				vo.setNewName(rs.getString(3));
+				vo.setOriName(rs.getString(4));
+				vo.setDownload(rs.getInt(5));
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
+	public void updateArticle(String no, String title, String content) {
+		
+		try {
+			logger.debug("updateArticle...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			
+			psmt.executeUpdate();
+			
+			conn.close();
+			psmt.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+	}
+	
+	public int listTotalNum(String pg) {
 		
 		logger.debug("pageNum...");
 		
-		int limitStart = 0;       // SQL Limit ?, 10의 ?값 시작값
-		int currentPg = 1;        // 현재 페이지 값 로그인페이지에서 넘어올시 첫화면으로 표시하기 위해 1값
-		int total = 0;            // 전체 게시글 수
-		int lastPageNum = 0;      // 마지막 페이지 값
-		int pageGroupCurrent = 1; // 현재 페이지 그룹
-		int pageGroupStart = 1;   // 시작 페이지 그룹값
-		int pageGroupEnd = 0;     // 마지막 페이지 그룹값
-		int pageStartNum = 0;     // 이전 or 다음 버튼 클릭시 시작되는 페이지 그룹 번호
+		int total = 0;
 		
 		// 전체 게시물 갯수 구하기
 		try {
@@ -138,43 +215,93 @@ public class articleDAO {
 			logger.error(e.getMessage());
 		}
 		
-		// 페이지 마지막 번호 계산
-		if(total % 10 == 0){
-			lastPageNum = total / 10;
-		}else{
-			lastPageNum = (total / 10) + 1;
+		return total;
+	}
+	
+	public ArticleVO insertComment(ArticleVO comment) {
+		ArticleVO vo = null;
+		int result = 0;
+		try{
+			logger.info("insertComment");
+			Connection conn = DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt1.setInt(1, comment.getParent());
+			psmt1.setString(2, comment.getContent());
+			psmt1.setString(3, comment.getUid());
+			psmt1.setString(4, comment.getRegip());
+			
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
+			psmt2.setInt(1, comment.getParent());
+			
+			Statement stmt = conn.createStatement();
+			
+			psmt2.executeUpdate();
+			result = psmt1.executeUpdate();
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_COMMENT_LATEST);
+			
+			conn.commit();
+			
+			if(rs.next()) {
+				vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setParent(rs.getString(2));
+				vo.setContent(rs.getString(6));
+				vo.setRdate(rs.getString(11).substring(2, 10));
+				vo.setNick(rs.getString(12));
+			}
+			
+			rs.close();
+			stmt.close();
+			conn.close();
+			psmt1.close();
+			psmt2.close();
+			
+		}catch(Exception e){
+			logger.error(e.getMessage());
 		}
-		
-		// 현재 페이지 게시물 limit 시작값 계산
-		if(pg != null){
-			currentPg = Integer.parseInt(pg);
-			// pg를 받아올때 로그인페이지에서 바로 넘어오는 경우 null이기 때문에 null 체크를 해준다
-		}
-		
-		limitStart = (currentPg - 1) * 10;
-		
-		// 페이지 그룹 계산
-		pageGroupCurrent =  (int)Math.ceil(currentPg / 10.0);
-		pageGroupStart = (pageGroupCurrent-1) * 10 + 1;
-		pageGroupEnd = pageGroupCurrent * 10;
-		
-		if(pageGroupEnd > lastPageNum){
-			pageGroupEnd = lastPageNum;
-		}
-		
-		// 페이지 시작 번호 계산
-		pageStartNum = (total - limitStart)+1;
-		
-		PagenumVO vo = new PagenumVO();
-		vo.setLimitStart(limitStart);
-		vo.setCurrentPg(currentPg);
-		vo.setTotal(total);
-		vo.setLastPageNum(lastPageNum);
-		vo.setPageGroupCurrent(pageGroupCurrent);
-		vo.setPageGroupStart(pageGroupStart);
-		vo.setPageGroupEnd(pageGroupEnd);
-		vo.setPageStartNum(pageStartNum);
 		
 		return vo;
+	}
+
+	public List<ArticleVO> selectCommentList(String no) {
+		
+		List<ArticleVO> articles = new ArrayList<>();
+		
+		try {
+			logger.info("selectCommentList...");
+			
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COMMENTS);
+			psmt.setString(1, no);
+			ResultSet rs   = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO ab = new ArticleVO();
+				ab.setNo(rs.getInt(1));
+				ab.setParent(rs.getString(2));
+				ab.setComment(rs.getInt(3));
+				ab.setCate(rs.getString(4));
+				ab.setTitle(rs.getString(5));
+				ab.setContent(rs.getString(6));
+				ab.setFile(rs.getInt(7));
+				ab.setHit(rs.getInt(8));
+				ab.setUid(rs.getString(9));
+				ab.setRegip(rs.getString(10));
+				ab.setRdate(rs.getString(11).substring(2, 10));
+				ab.setNick(rs.getString(12));
+				
+				articles.add(ab);			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return articles;
 	}
 }

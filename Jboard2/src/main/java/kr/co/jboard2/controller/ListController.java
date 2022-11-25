@@ -31,6 +31,7 @@ public class ListController extends HttpServlet{
 		
 		String pg = req.getParameter("pg");
 		
+		// 페이지 리스트
 		PagenumVO vo = service.pageNum(pg);
 		req.setAttribute("vo", vo);
 		

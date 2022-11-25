@@ -18,7 +18,7 @@
   		<url-pattern>*.jsp</url-pattern>
   	</web-resource-collection>
   	<auth-constraint>
-  		<role-name>nbody</role-name>
+  		<role-name>nobody</role-name>
   	</auth-constraint>
   </security-constraint>
   
@@ -31,7 +31,7 @@
   </security-constraint>
   
   <!-- 필터 설정 -->
-  <filter>
+ <filter>
   	<filter-name>SetCharacterEncodingFilter</filter-name>
   	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
   	<init-param>
@@ -41,6 +41,22 @@
   </filter>
   <filter-mapping>
 	<filter-name>SetCharacterEncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<filter-class>kr.co.jboard2.filter.AutoLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+  	<filter-name>LoginCheckFilter</filter-name>
+  	<filter-class>kr.co.jboard2.filter.LoginCheckFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>LoginCheckFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
 </web-app>

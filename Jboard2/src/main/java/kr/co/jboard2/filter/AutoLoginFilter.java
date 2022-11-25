@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import kr.co.jboard2.service.user.UserService;
 import kr.co.jboard2.vo.UserVO;
 
-@WebFilter("/*")
 public class AutoLoginFilter implements Filter{
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,34 +28,48 @@ public class AutoLoginFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		logger.info("filterTest");
 		
-		// 자동 로그인 여부에 따라 로그인 처리
+		// 현재 로그인 상태 확인
 		HttpServletRequest req   = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		HttpSession sess = req.getSession();
-		Cookie[] cookies = req.getCookies();
 		
-		if(cookies != null) {
-			for(Cookie cookie : cookies){
-				if(cookie.getName().equals("SESSID")) {
-					String sessId = cookie.getValue();
-					UserVO vo = service.selectUserBySessId(sessId);
+		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
+		
+		if(sessUser != null) {
+			// 로그인 상태일 경우
+			// 다음 필터 실행
+			chain.doFilter(request, response);
+			return;
+		}else {
+			// 로그인 상태가 아닐 경우
+			// 자동 로그인 여부에 따라 로그인 처리
+			Cookie[] cookies = req.getCookies();
+			
+			if(cookies != null) {
+				for(Cookie cookie : cookies){
 					
-					if(vo != null) {
-						// 로그인 처리
-						sess.setAttribute("sessUser", vo);
+					if(cookie.getName().equals("SESSID")) {
 						
-						// 쿠키 만료일 연장
-						cookie.setMaxAge(60*60*24*3);
-						resp.addCookie(cookie);
+						String sessId = cookie.getValue();
+						UserVO vo = service.selectUserBySessId(sessId);
 						
-						// 데이터베이스 sessId 만료일 연장
-						service.updateUserForSessLimitDate(sessId);
+						if(vo != null) {
+							// 로그인 처리
+							sess.setAttribute("sessUser", vo);
+							
+							// 쿠키 만료일 연장
+							cookie.setMaxAge(60*60*24*3);
+							cookie.setPath("/");
+							resp.addCookie(cookie);
+							
+							// 데이터베이스 sessId 만료일 연장
+							service.updateUserForSessLimitDate(sessId);
+						}
 					}
 				}
 			}
+			// 다음 필터 실행
+			chain.doFilter(request, response);
 		}
-		// 다음 필터 실행
-		chain.doFilter(request, response);
 	}
-
 }

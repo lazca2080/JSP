@@ -19,8 +19,8 @@ public enum UserService {
 		return dao.selectTerms();
 	}
 	
-	public void insertArticle(ArticleVO vo) {
-		dao.insertArticle(vo);
+	public int insertArticle(ArticleVO vo) {
+		return dao.insertArticle(vo);
 	}
 	
 	public void selectArticle() {}

@@ -376,26 +376,37 @@ public class userDAO {
 		return result;
 	}
 
-	public void insertArticle(ArticleVO vo) {
+	public int insertArticle(ArticleVO vo) {
+		
+		int parent = 0;
 		
 		try {
 			logger.debug("insertArticle...");
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
+			Statement stmt = conn.createStatement();
 			psmt.setString(1, vo.getTitle());
 			psmt.setString(2, vo.getContent());
-			psmt.setInt(3, vo.getFile());
+			psmt.setInt(3, vo.getFname() == null ? 0 : 1);
 			psmt.setString(4, vo.getUid());
 			psmt.setString(5, vo.getRegip());
 			
+			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
 			psmt.executeUpdate();
+			
+			if(rs.next()) {
+				parent = rs.getInt(1);
+			}
 			
 			conn.close();
 			psmt.close();
+			rs.close();
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+		
+		return parent;
 		
 	}
 	

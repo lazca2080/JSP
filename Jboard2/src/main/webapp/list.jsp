@@ -1,9 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="./_header.jsp"/>
-<script>
-	console.log('${vo.pageGroupStart}');
-</script>
 <main id="board">
     <section class="list">                
         <form action="#">
@@ -22,30 +19,22 @@
             </tr>
             <c:forEach var="article" items="${articles}">
             	<c:set var="i" value="${i + 1}"/>
-            		<c:set var="pageStartNum" value="${vo.pageStartNum - i}"/>
-			            <tr>
-			                <td>${pageStartNum}</td>
-			                <td><a href="/Jboard2/view.do?no=${article.no}">${article.title}[${article.comment}]</a></td>
-			                <td>${article.nick}</td>
-			                <td>${article.rdate}</td>
-			                <td>${article.hit}</td>
-			            </tr>
+		            <tr>
+		                <td>${vo.pageStartNum - i}</td>
+		                <td><a href="/Jboard2/view.do?no=${article.no}&pg=${vo.currentPg}">${article.title}[${article.comment}]</a></td>
+		                <td>${article.nick}</td>
+		                <td>${article.rdate}</td>
+		                <td>${article.hit}</td>
+		            </tr>
             </c:forEach>
         </table>
 		
         <div class="page">
-        	<c:if test="${vo.pageGroupStart lt 1}">
+        	<c:if test="${vo.pageGroupStart gt 1}">
            		<a href="/Jboard2/list.do?pg=${vo.pageGroupStart - 1}" class="prev">이전</a>
             </c:if>
             <c:forEach var="i" begin="${vo.pageGroupStart}" end="${vo.pageGroupEnd}">
-            	<c:choose>
-            		<c:when test="${vo.currentPg eq i}">
-	            		<a href="/Jboard2/list.do?pg=${i}" class="num current">${i}</a>
-	            	</c:when>
-	            	<c:when test="${vo.currentPg ne i}">
-	            		<a href="/Jboard2/list.do?pg=${i}" class="num off">${i}</a>
-					</c:when>
-	            </c:choose>
+            	<a href="/Jboard2/list.do?pg=${i}" class="num ${vo.currentPg eq i ? 'current':'off'}">${i}</a>
 		    </c:forEach>
 		    <c:if test="${vo.pageGroupEnd lt vo.lastPageNum}">
 	            <a href="/Jboard2/list.do?pg=${vo.pageGroupEnd + 1}" class="next">다음</a>

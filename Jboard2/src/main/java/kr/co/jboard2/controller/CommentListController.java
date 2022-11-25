@@ -1,19 +1,22 @@
 package kr.co.jboard2.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import kr.co.jboard2.service.article.ArticleService;
 import kr.co.jboard2.vo.ArticleVO;
 
-@WebServlet("/modify.do")
-public class ModifyController extends HttpServlet{
+@WebServlet("/commentList.do")
+public class CommentListController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private static ArticleService service = ArticleService.INSTANCE;
@@ -26,26 +29,19 @@ public class ModifyController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String no = req.getParameter("no");
-		String pg = req.getParameter("pg");
-		ArticleVO vo = service.selectArticle(no);
-		req.setAttribute("vo", vo);
-		req.setAttribute("pg", pg);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/modify.jsp");
-		dispatcher.forward(req, resp);
+		List<ArticleVO> articles = service.selectCommentList(no);
+		
+		resp.setContentType("text/html;charset=UTF-8");
+		
+		Gson gson = new Gson();
+		String jsonData = gson.toJson(articles);
+		PrintWriter writer = resp.getWriter();
+		writer.print(jsonData);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String title   = req.getParameter("title");
-		String content = req.getParameter("content");
-		String no  	   = req.getParameter("no");
-		String pg  	   = req.getParameter("pg");
-		
-		service.updateArticle(no, title, content);
-		
-		resp.sendRedirect("/Jboard2/view.do?pg="+pg+"&no="+no);
-		
 	}
 
 }

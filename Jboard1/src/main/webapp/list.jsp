@@ -63,6 +63,11 @@
 	// 댓글 개수 계산
 	
 %>
+<script>
+	let pageGroupStart = "<%= pageGroupStart %>";
+	
+	console.log(pageGroupStart);
+</script>
 <main id="Board">
     <section class="list">
         <table>

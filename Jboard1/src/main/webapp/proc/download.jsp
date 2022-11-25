@@ -15,7 +15,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String parent = request.getParameter("parent");
 	
-	
 	// 파일 정보 가져오기
 	ArticleDAO dao = ArticleDAO.getInstance();
 	

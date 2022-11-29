@@ -128,16 +128,6 @@
         <!-- 댓글목록 -->
         <section class="commentList">
             <h3>댓글목록</h3>                   
-            <article>
-                <span class="nick">길동이</span>
-                <span class="date">20-05-20</span>
-                <p class="content">댓글 샘플 입니다.</p>                        
-                <div>
-                    <a href="#" class="remove">삭제</a>
-                    <a href="#" class="modify">수정</a>
-                </div>
-            </article>
-
             <p class="empty">등록된 댓글이 없습니다.</p>
 
         </section>

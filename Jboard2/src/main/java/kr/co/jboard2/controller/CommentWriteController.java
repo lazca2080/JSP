@@ -45,7 +45,7 @@ public class CommentWriteController extends HttpServlet{
 		
 		ArticleVO vo = service.insertComment(comment);
 		
-		resp.setContentType("text/html;charset=UTF-8");
+		//resp.setContentType("text/html;charset=UTF-8");
 		
 		JsonObject json = new JsonObject();
 		json.addProperty("result", 1);

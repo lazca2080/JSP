@@ -32,7 +32,7 @@ public class CommentListController extends HttpServlet{
 		
 		List<ArticleVO> articles = service.selectCommentList(no);
 		
-		resp.setContentType("text/html;charset=UTF-8");
+		//resp.setContentType("text/html;charset=UTF-8");
 		
 		Gson gson = new Gson();
 		String jsonData = gson.toJson(articles);

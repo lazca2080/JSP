@@ -31,6 +31,7 @@ public class Sql {
 	
 	// board
 	public static final String INSERT_ARTICLE = "insert into `board_article` set "
+												+ "`cate`=?,"
 												+ "`title`=?,"
 												+ "`content`=?,"
 												+ "`file`=?,"
@@ -50,14 +51,14 @@ public class Sql {
 											+ "`regip`=?,"
 											+ "`rdate`=NOW()";
 	
-	public static final String SELECT_COUNT_TOTAL = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0";
+	public static final String SELECT_COUNT_TOTAL = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0 AND `cate`=?";
 	
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*, `nick` FROM `board_article` "
 												+ "AS a JOIN `board_user` "
 												+ "AS b ON a.uid = b.uid "
-												+ "WHERE `parent` = 0 "
+												+ "WHERE `parent` = 0 AND `cate`=? "
 												+ "ORDER BY a.`no` desc "
 												+ "LIMIT ?, 10";
 	
@@ -65,7 +66,13 @@ public class Sql {
 												+ "FROM `board_article` AS a "
 												+ "LEFT JOIN `board_file` AS b "
 												+ "ON a.`no` = b.`parent` "
-												+ "WHERE `no` = ?";
+												+ "WHERE `no` = ? AND `cate`=?";
+	
+	public static final String SELECT_LATEST = "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+												+ "UNION "
+												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
 	
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
 	
@@ -78,11 +85,13 @@ public class Sql {
 														+ "JOIN `board_user` AS b USING (`uid`) "
 														+ "WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1 ";
 	
+	public static final String SELECT_GET_LATESTS = "SELECT `no`, `title` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
+	
 	public static final String SELECT_FINDID = "SELECT count(`uid`) FROM `board_user` WHERE `name`=? AND `email`=?";
 	
 	public static final String SELECT_USER_BY_SESSID = "SELECT * FROM `board_user` WHERE `sessId`=? AND `sessLimitDate` > NOW()";
 	
-	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() WHERE `no`=?";
+	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() WHERE `no`=? AND `cate`=?";
 	
 	public static final String UPDATE_ARTICLE_HIT = "UPDATE `board_article` SET `hit`=`hit`+1 WHERE `no`=?";
 	
@@ -97,7 +106,7 @@ public class Sql {
 	
 	public static final String UPDATE_ARTICLE_COMMENT_MINUS = "UPDATE `board_article` SET `comment`=`comment`-1 WHERE `no`=?";
 	
-	public static final String DELETE_ARTICLE = "DELETE FROM `board_article` WHERE `no`=? or `parent`=?";
+	public static final String DELETE_ARTICLE = "DELETE FROM `board_article` WHERE (`no`=? OR `parent`=?) AND `cate`=? ";
 	
 	public static final String DELETE_FILE = "DELETE FROM `board_file` WHERE `parent`=?";
 	

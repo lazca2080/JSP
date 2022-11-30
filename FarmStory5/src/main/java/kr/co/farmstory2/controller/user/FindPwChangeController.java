@@ -16,7 +16,7 @@ import com.google.gson.JsonObject;
 import kr.co.farmstory2.service.user.UserService;
 import kr.co.farmstory2.vo.UserVO;
 
-@WebServlet("/user/FindPwChange.do")
+@WebServlet("/user/findPwChange.do")
 public class FindPwChangeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -29,13 +29,23 @@ public class FindPwChangeController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/FindPwChange.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/user/findPwChange.jsp");
 		dispatcher.forward(req, resp);		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String uid  = req.getParameter("uid");
+		String pass = req.getParameter("pass");
+		
+		int result = service.updateUserPassword(pass, uid);
+		
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json.toString());
 
 		
 	}

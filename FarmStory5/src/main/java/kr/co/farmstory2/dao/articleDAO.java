@@ -32,11 +32,12 @@ public class articleDAO {
 			conn.setAutoCommit(false);
 			PreparedStatement psmt = conn.prepareStatement(Sql.INSERT_ARTICLE);
 			Statement stmt = conn.createStatement();
-			psmt.setString(1, vo.getTitle());
-			psmt.setString(2, vo.getContent());
-			psmt.setInt(3, vo.getFname() == null ? 0 : 1);
-			psmt.setString(4, vo.getUid());
-			psmt.setString(5, vo.getRegip());
+			psmt.setString(1, vo.getCate());
+			psmt.setString(2, vo.getTitle());
+			psmt.setString(3, vo.getContent());
+			psmt.setInt(4, vo.getFname() == null ? 0 : 1);
+			psmt.setString(5, vo.getUid());
+			psmt.setString(6, vo.getRegip());
 			
 			psmt.executeUpdate();
 			ResultSet rs = stmt.executeQuery(Sql.SELECT_MAX_NO);
@@ -74,7 +75,7 @@ public class articleDAO {
 		}
 	}
 	
-	public ArticleVO selectArticle(String no) {
+	public ArticleVO selectArticle(String no, String cate) {
 		
 		ArticleVO vo = null;
 		
@@ -83,6 +84,7 @@ public class articleDAO {
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
 			psmt.setString(1, no);
+			psmt.setString(2, cate);
 			
 			ResultSet rs = psmt.executeQuery();
 			
@@ -104,7 +106,7 @@ public class articleDAO {
 		return vo;
 	}
 	
-	public List<ArticleVO> selectArticles(int limitStart) {
+	public List<ArticleVO> selectArticles(int limitStart, String cate) {
 		
 		List<ArticleVO> articles = new ArrayList<>();
 		
@@ -112,7 +114,8 @@ public class articleDAO {
 			logger.debug("selectArticles...");
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLES);
-			psmt.setInt(1, limitStart);
+			psmt.setString(1, cate);
+			psmt.setInt(2, limitStart);
 			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()) {
@@ -137,7 +140,41 @@ public class articleDAO {
 		
 		return articles;
 	}
-
+	
+	public List<ArticleVO> selectLatest(String cate1, String cate2, String cate3) {
+		
+		List<ArticleVO> articles = new ArrayList<>();
+		
+		try {
+			logger.debug("selectLatest...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_LATEST);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				vo.setRdate(rs.getString(3).substring(2, 10));
+				
+				articles.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return articles;
+	}
+	
 	public FileVO selectFile(String no) {
 		
 		FileVO vo = null;
@@ -169,7 +206,7 @@ public class articleDAO {
 		return vo;
 	}
 	
-	public void updateArticle(String no, String title, String content) {
+	public void updateArticle(String no, String title, String content, String cate) {
 		
 		try {
 			logger.debug("updateArticle...");
@@ -178,6 +215,7 @@ public class articleDAO {
 			psmt.setString(1, title);
 			psmt.setString(2, content);
 			psmt.setString(3, no);
+			psmt.setString(4, cate);
 			
 			psmt.executeUpdate();
 			
@@ -190,7 +228,58 @@ public class articleDAO {
 		
 	}
 	
-	public int listTotalNum(String pg) {
+	public void deleteArticle(String no, String cate) {
+		try {
+			logger.debug("deleteArticle...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.setString(3, cate);
+			
+			psmt.executeUpdate();
+			
+			conn.close();
+			psmt.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+	}
+	
+	public List<ArticleVO> getLatests(String cate) {
+		
+		List<ArticleVO> latests = new ArrayList<>();
+		
+		try {
+			logger.debug("getLatests...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_GET_LATESTS);
+			psmt.setString(1, cate);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				
+				latests.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return latests;
+	}
+	
+	public int listTotalNum(String cate) {
 		
 		logger.debug("pageNum...");
 		
@@ -200,15 +289,16 @@ public class articleDAO {
 		try {
 			logger.debug("selectCountTotal...");
 			Connection conn = DBCP.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL);
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL);
+			psmt.setString(1, cate);
+			ResultSet rs = psmt.executeQuery();
 			
 			if(rs.next()) {
 				total = rs.getInt(1);
 			}
 			
 			conn.close();
-			stmt.close();
+			psmt.close();
 			rs.close();
 			
 		} catch (Exception e) {

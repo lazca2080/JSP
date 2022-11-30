@@ -1,8 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../_header.jsp"/>
+<script>
+	$(function(){
+		let success = '${success}';
+		
+		if(success == 100){
+			alert('아이디 또는 비밀번호가 틀렸습니다.');
+		}
+	});
+
+</script>
 <main id="user">
     <section class="login">
-        <form action="../list.html">
+        <form action="/FarmStory5/user/login.do" method="post">
             <table border="0">
                 <tr>
                     <td><img src="../img/login_ico_id.png" alt="아이디"/></td>

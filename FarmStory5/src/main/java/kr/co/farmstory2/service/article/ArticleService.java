@@ -3,8 +3,11 @@ package kr.co.farmstory2.service.article;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,8 +39,8 @@ public enum ArticleService {
 		dao.insertFile(parent, newName, fname);
 	}
 	
-	public ArticleVO selectArticle(String no) {
-		return dao.selectArticle(no);
+	public ArticleVO selectArticle(String no, String cate) {
+		return dao.selectArticle(no, cate);
 	}
 	
 	public FileVO selectFile(String no) {
@@ -48,12 +51,24 @@ public enum ArticleService {
 		return dao.selectCommentList(no);
 	}
 	
-	public List<ArticleVO> selectArticles(int limitStart) {
-		return dao.selectArticles(limitStart);
+	public List<ArticleVO> selectArticles(int limitStart, String cate) {
+		return dao.selectArticles(limitStart, cate);
 	}
 	
-	public void updateArticle(String no, String title, String content) {
-		dao.updateArticle(no, title, content);
+	public List<ArticleVO> selectLatest(String cate1, String cate2, String cate3) {
+		return dao.selectLatest(cate1, cate2, cate3);
+	}
+	
+	public void updateArticle(String no, String title, String content, String cate) {
+		dao.updateArticle(no, title, content, cate);
+	}
+	
+	public void deleteArticle(String no, String cate) {
+		dao.deleteArticle(no, cate);
+	}
+	
+	public List<ArticleVO> getLatests(String cate) {
+		return dao.getLatests(cate);
 	}
 	
 	public MultipartRequest fileUpload(HttpServletRequest req, String savePath) throws IOException {
@@ -87,7 +102,7 @@ public enum ArticleService {
 	}
 	
 	// 서비스 로직
-	public PagenumVO pageNum(String pg) {
+	public PagenumVO pageNum(String pg, String cate) {
 		
 		int limitStart = 0;       // SQL Limit ?, 10의 ?값 시작값
 		int currentPg = 1;        // 현재 페이지 값 로그인페이지에서 넘어올시 첫화면으로 표시하기 위해 1값
@@ -98,7 +113,7 @@ public enum ArticleService {
 		int pageGroupEnd = 0;     // 마지막 페이지 그룹값
 		int pageStartNum = 0;     // 이전 or 다음 버튼 클릭시 시작되는 페이지 그룹 번호
 		
-		total = dao.listTotalNum(pg);
+		total = dao.listTotalNum(cate);
 		
 		// 페이지 마지막 번호 계산
 		if(total % 10 == 0){
@@ -138,5 +153,34 @@ public enum ArticleService {
 		vo.setPageStartNum(pageStartNum);
 		
 		return vo;
+	}
+	
+	public Map<List<ArticleVO>, ArticleVO> divideArticles(List<ArticleVO> articles) {
+		
+		Map<List<ArticleVO>, ArticleVO> map = new HashMap<List<ArticleVO>, ArticleVO>();
+		
+		List<ArticleVO> vo1 = new ArrayList<>();
+		List<ArticleVO> vo2 = new ArrayList<>();
+		List<ArticleVO> vo3 = new ArrayList<>();
+		
+		for(int i=0; i<5; i++) {
+			ArticleVO vo = articles.get(i);
+			map.put(vo1, vo);
+		}
+		
+		for(int i=5; i<10; i++) {
+			ArticleVO vo = articles.get(i);
+			vo2.add(vo);
+			map.put(vo2, vo);
+		}
+		
+		for(int i=10; i<15; i++) {
+			ArticleVO vo = articles.get(i);
+			vo3.add(vo);
+			map.put(vo3, vo);
+		}
+		
+		return map;
+		
 	}
 }

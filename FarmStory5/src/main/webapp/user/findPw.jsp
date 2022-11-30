@@ -12,8 +12,11 @@
 				return;
 			}
 			
-			let uid   = $('input[name=name]').val();
+			let uid   = $('input[name=uid]').val();
 			let email = $('input[name=email]').val();
+			
+			console.log(uid);
+			console.log(email);
 			
 			let jsonData = {
 					"uid":uid,
@@ -26,7 +29,8 @@
 				data:jsonData,
 				dataType:'json',
 				success: function(data){
-						
+					console.log(data.result);
+					console.log(data.uid);
 					if(data.result > 0){
 						location.href="/FarmStory5/user/findPwChange.do"
 					}else{
@@ -55,7 +59,7 @@
                             <span class="emailResult"></span>
                         </div>
                         <div>
-                            <input type="text" name="auth" disabled placeholder="인증번호 입력"/>
+                            <input type="text" name="auth" placeholder="인증번호 입력"/>
                             <button type="button" class="btnConfirm emailCodeCheck">확인</button>
                         </div>
                     </td>

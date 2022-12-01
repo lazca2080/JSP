@@ -7,8 +7,10 @@
 		alert('로그인 실패!');
 	}else if(success == 101){
 		alert('세션이 초기화되었습니다.\n다시 로그인해주세요');
-	}
-	
+	}else if(success == 102){
+		console.log(success);
+		alert('먼저 로그인을 하셔야 합니다.');
+	}	
 	
 </script>
 <main id="user">

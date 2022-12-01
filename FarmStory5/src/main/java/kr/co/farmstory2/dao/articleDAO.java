@@ -10,6 +10,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mysql.cj.protocol.Resultset;
+
 import kr.co.farmstory2.db.DBCP;
 import kr.co.farmstory2.db.Sql;
 import kr.co.farmstory2.vo.ArticleVO;
@@ -82,11 +84,17 @@ public class articleDAO {
 		try {
 			logger.debug("selectArticle...");
 			Connection conn = DBCP.getConnection();
-			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
-			psmt.setString(1, no);
-			psmt.setString(2, cate);
 			
-			ResultSet rs = psmt.executeQuery();
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt1.setString(1, no);
+			psmt1.setString(2, cate);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			psmt2.setString(1, no);
+			
+			ResultSet rs = psmt1.executeQuery();
+			psmt2.executeUpdate();
+			conn.commit();
 			
 			if(rs.next()) {
 				vo = new ArticleVO();
@@ -94,10 +102,11 @@ public class articleDAO {
 				vo.setTitle(rs.getString(5));
 				vo.setContent(rs.getString(6));
 				vo.setFile(rs.getInt(7));
+				vo.setUid(rs.getString(9));
 			}
 			
 			conn.close();
-			psmt.close();
+			psmt1.close();
 			rs.close();
 			
 		} catch (Exception e) {
@@ -321,6 +330,7 @@ public class articleDAO {
 			psmt1.setString(2, comment.getContent());
 			psmt1.setString(3, comment.getUid());
 			psmt1.setString(4, comment.getRegip());
+			psmt1.setString(5, comment.getCate());
 			
 			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
 			psmt2.setInt(1, comment.getParent());
@@ -393,5 +403,69 @@ public class articleDAO {
 		}
 		
 		return articles;
+	}
+	
+	public int[] deleteComment(String no, String parent) {
+		
+		int comment = 0;
+		int total = 0;
+		
+		try {
+			logger.debug("deleteComment...");
+			Connection conn = DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.DELETE_COMMENT);
+			psmt1.setString(1, no);
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			psmt2.setString(1, parent);
+			PreparedStatement psmt3 = conn.prepareStatement(Sql.SELECT_COMMENTS_TOTAL);
+			psmt3.setString(1, parent);
+			
+			comment = psmt1.executeUpdate();
+			psmt2.executeUpdate();
+			ResultSet rs = psmt3.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+			conn.commit();
+			
+			conn.close();
+			psmt1.close();
+			psmt2.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			
+		}
+		
+		int[] result = {comment, total};
+		
+		return result;
+	}
+	
+	public int updateComment(String content, String no) {
+		
+		int result = 0;
+		
+		try {
+			logger.debug("updateComment...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);
+			
+			result = psmt.executeUpdate();
+			
+			conn.close();
+			psmt.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return result;
 	}
 }

@@ -49,6 +49,7 @@ public class Sql {
 											+ "`content`=?,"
 											+ "`uid`=?,"
 											+ "`regip`=?,"
+											+ "`cate`=?,"
 											+ "`rdate`=NOW()";
 	
 	public static final String SELECT_COUNT_TOTAL = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0 AND `cate`=?";
@@ -84,6 +85,8 @@ public class Sql {
 	public static final String SELECT_COMMENT_LATEST = "SELECT a.*, b.nick FROM `board_article` AS a "
 														+ "JOIN `board_user` AS b USING (`uid`) "
 														+ "WHERE `parent` != 0 ORDER BY `no` DESC LIMIT 1 ";
+	
+	public static final String SELECT_COMMENTS_TOTAL = "SELECT COUNT(`no`) FROM `board_article` WHERE `parent`=?";
 	
 	public static final String SELECT_GET_LATESTS = "SELECT `no`, `title` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
 	

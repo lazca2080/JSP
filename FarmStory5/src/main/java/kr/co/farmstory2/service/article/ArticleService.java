@@ -81,6 +81,13 @@ public enum ArticleService {
 		return dao.insertComment(comment);
 	}
 	
+	public int[] deleteComment(String no, String parent) {
+		return dao.deleteComment(no, parent);
+	}
+	
+	public int updateComment(String content, String no) {
+		return dao.updateComment(content, no);
+	}
 	// 추가적인 서비스 로직
 	public String renameFile(String fname, String uid, String savePath) {
 		

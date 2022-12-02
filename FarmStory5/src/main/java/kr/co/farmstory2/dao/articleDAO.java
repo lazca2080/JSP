@@ -150,6 +150,158 @@ public class articleDAO {
 		return articles;
 	}
 	
+	public List<ArticleVO> searchArticleTitle(String cate, String search, int limitStart) {
+		
+		List<ArticleVO> searchs = new ArrayList<>();
+		
+		try {
+			logger.debug("searchArticles...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SEARCH_ARTICLES_TITLE);
+			psmt.setString(1, cate);
+			//psmt.setString(2, option);
+			psmt.setString(2, "%"+search+"%");
+			psmt.setInt(3, limitStart);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setComment(rs.getInt(3));
+				vo.setTitle(rs.getString(5));
+				vo.setNick(rs.getString(12));
+				vo.setHit(rs.getInt(8));
+				vo.setRdate(rs.getString(11).substring(2, 10));
+				
+				searchs.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return searchs;
+	}
+	
+	public List<ArticleVO> searchArticleContent(String cate, String search, int limitStart) {
+		
+		List<ArticleVO> searchs = new ArrayList<>();
+		
+		try {
+			logger.debug("searchArticles...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SEARCH_ARTICLES_CONTENT);
+			psmt.setString(1, cate);
+			//psmt.setString(2, option);
+			psmt.setString(2, "%"+search+"%");
+			psmt.setInt(3, limitStart);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setComment(rs.getInt(3));
+				vo.setTitle(rs.getString(5));
+				vo.setNick(rs.getString(12));
+				vo.setHit(rs.getInt(8));
+				vo.setRdate(rs.getString(11).substring(2, 10));
+				
+				searchs.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return searchs;
+	}
+	
+	public List<ArticleVO> searchArticleComment(String cate, String search, int limitStart) {
+		
+		List<ArticleVO> searchs = new ArrayList<>();
+		
+		try {
+			logger.debug("searchArticles...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SEARCH_ARTICLES_COMMENT);
+			psmt.setString(1, cate);
+			//psmt.setString(2, option);
+			psmt.setString(2, "%"+search+"%");
+			psmt.setInt(3, limitStart);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setComment(rs.getInt(3));
+				vo.setTitle(rs.getString(5));
+				vo.setNick(rs.getString(12));
+				vo.setHit(rs.getInt(8));
+				vo.setRdate(rs.getString(11).substring(2, 10));
+				
+				searchs.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return searchs;
+	}
+	
+	public List<ArticleVO> searchArticleNick(String cate, String search, int limitStart) {
+		
+		List<ArticleVO> searchs = new ArrayList<>();
+		
+		try {
+			logger.debug("searchArticles...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SEARCH_ARTICLES_NICK);
+			psmt.setString(1, cate);
+			//psmt.setString(2, option);
+			psmt.setString(2, "%"+search+"%");
+			psmt.setInt(3, limitStart);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setComment(rs.getInt(3));
+				vo.setTitle(rs.getString(5));
+				vo.setNick(rs.getString(12));
+				vo.setHit(rs.getInt(8));
+				vo.setRdate(rs.getString(11).substring(2, 10));
+				
+				searchs.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return searchs;
+	}
+	
 	public List<ArticleVO> selectLatest(String cate1, String cate2, String cate3) {
 		
 		List<ArticleVO> articles = new ArrayList<>();
@@ -161,6 +313,38 @@ public class articleDAO {
 			psmt.setString(1, cate1);
 			psmt.setString(2, cate2);
 			psmt.setString(3, cate3);
+			
+			ResultSet rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleVO vo = new ArticleVO();
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				vo.setRdate(rs.getString(3).substring(2, 10));
+				
+				articles.add(vo);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return articles;
+	}
+	
+	public List<ArticleVO> selectLatest2(String cate) {
+		
+		List<ArticleVO> articles = new ArrayList<>();
+		
+		try {
+			logger.debug("selectLatest...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_LATEST2);
+			psmt.setString(1, cate);
 			
 			ResultSet rs = psmt.executeQuery();
 			
@@ -300,6 +484,126 @@ public class articleDAO {
 			Connection conn = DBCP.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL);
 			psmt.setString(1, cate);
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return total;
+	}
+	
+	public int titleTotalNum(String cate, String option) {
+		
+		logger.debug("pageNum...");
+		
+		int total = 0;
+		
+		// 전체 게시물 갯수 구하기
+		try {
+			logger.debug("selectCountTotal...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_TITLE);
+			psmt.setString(1, cate);
+			psmt.setString(2, option);
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return total;
+	}
+	
+	public int contentTotalNum(String cate, String option) {
+		
+		logger.debug("pageNum...");
+		
+		int total = 0;
+		
+		// 전체 게시물 갯수 구하기
+		try {
+			logger.debug("selectCountTotal...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_CONTENT);
+			psmt.setString(1, cate);
+			psmt.setString(2, option);
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return total;
+	}
+	
+	public int commentTotalNum(String cate, String option) {
+		
+		logger.debug("pageNum...");
+		
+		int total = 0;
+		
+		// 전체 게시물 갯수 구하기
+		try {
+			logger.debug("selectCountTotal...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_COMMENT);
+			psmt.setString(1, cate);
+			psmt.setString(2, option);
+			ResultSet rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+			conn.close();
+			psmt.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return total;
+	}
+	
+	public int nickTotalNum(String cate, String option) {
+		
+		logger.debug("pageNum...");
+		
+		int total = 0;
+		
+		// 전체 게시물 갯수 구하기
+		try {
+			logger.debug("selectCountTotal...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_NICK);
+			psmt.setString(1, cate);
+			psmt.setString(2, option);
 			ResultSet rs = psmt.executeQuery();
 			
 			if(rs.next()) {

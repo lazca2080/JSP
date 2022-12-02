@@ -54,6 +54,17 @@ public class Sql {
 	
 	public static final String SELECT_COUNT_TOTAL = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0 AND `cate`=?";
 	
+	public static final String SELECT_COUNT_TOTAL_TITLE = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0 AND `cate`=? AND `title` LIKE ?";
+	
+	public static final String SELECT_COUNT_TOTAL_CONTENT = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0 AND `cate`=? AND `content` LIKE ?";
+	
+	public static final String SELECT_COUNT_TOTAL_NICK = "SELECT COUNT(a.`no`), `nick` FROM `board_article` "
+														+ "AS a JOIN `board_user` "
+														+ "AS b ON a.uid = b.uid "
+														+ "WHERE `parent` = 0 AND `cate`=? AND `nick` LIKE ?";
+	
+	public static final String SELECT_COUNT_TOTAL_COMMENT = "SELECT count(`no`) FROM `board_article` WHERE `parent` = 0 AND `cate`=? AND `title` IS NULL AND `content` LIKE ?";
+	
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	
 	public static final String SELECT_ARTICLES = "SELECT a.*, `nick` FROM `board_article` "
@@ -69,12 +80,43 @@ public class Sql {
 												+ "ON a.`no` = b.`parent` "
 												+ "WHERE `no` = ? AND `cate`=?";
 	
+	public static final String SEARCH_ARTICLES_TITLE = "SELECT a.*, `nick` FROM `board_article` "
+												+ "AS a JOIN `board_user` "
+												+ "AS b ON a.uid = b.uid "
+												+ "WHERE `parent` = 0 AND `cate`=? AND `title` LIKE ? "
+												+ "ORDER BY a.`no` desc "
+												+ "LIMIT ?, 10";
+	
+	public static final String SEARCH_ARTICLES_COMMENT = "SELECT a.*, `nick` FROM `board_article` "
+												+ "AS a JOIN `board_user` "
+												+ "AS b ON a.uid = b.uid "
+												+ "WHERE `parent` = 0 AND `cate`=? AND `parent`=? AND `content` LIKE ? "
+												+ "ORDER BY a.`no` desc "
+												+ "LIMIT ?, 10";
+	
+	public static final String SEARCH_ARTICLES_NICK = "SELECT a.*, `nick` FROM `board_article` "
+												+ "AS a JOIN `board_user` "
+												+ "AS b ON a.uid = b.uid "
+												+ "WHERE `parent` = 0 AND `cate`=? AND `nick` LIKE ? "
+												+ "ORDER BY a.`no` desc "
+												+ "LIMIT ?, 10";
+	
+	public static final String SEARCH_ARTICLES_CONTENT = "SELECT a.*, `nick` FROM `board_article` "
+												+ "AS a JOIN `board_user` "
+												+ "AS b ON a.uid = b.uid "
+												+ "WHERE `parent` = 0 AND `cate`=? AND `content` LIKE ? "
+												+ "ORDER BY a.`no` desc "
+												+ "LIMIT ?, 10";
+	
+	
 	public static final String SELECT_LATEST = "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
 												+ "UNION "
 												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
 												+ "UNION "
 												+ "(SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
 	
+	public static final String SELECT_LATEST2 = "SELECT `no`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC";
+			
 	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
 	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.`nick` FROM `board_article` AS a "

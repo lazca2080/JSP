@@ -57,6 +57,6 @@ public class RegisterController extends HttpServlet {
 		
 		service.insertUser(vo);
 		
-		resp.sendRedirect("/FarmStory5/user/login.do");
+		resp.sendRedirect("/FarmStory5/user/login.do?success=103");
 	}
 }

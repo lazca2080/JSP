@@ -32,9 +32,19 @@ public class IndexController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		List<ArticleVO> articles = service.selectLatest("grow", "school", "story");
+		//List<ArticleVO> articles = service.selectLatest("grow", "school", "story");
 		
-		//Map<List<ArticleVO>, ArticleVO> map = service.divideArticles(articles);
+		String cate = req.getParameter("cate");
+		
+		List<ArticleVO> grow = service.selectLatest2("grow");
+		List<ArticleVO> school = service.selectLatest2("school");
+		List<ArticleVO> story = service.selectLatest2("story");
+		
+		req.setAttribute("grow", grow);
+		req.setAttribute("school", school);
+		req.setAttribute("story", story);
+		
+		/*
 		List<ArticleVO> vo1 = new ArrayList<>();
 		List<ArticleVO> vo2 = new ArrayList<>();
 		List<ArticleVO> vo3 = new ArrayList<>();
@@ -57,6 +67,7 @@ public class IndexController extends HttpServlet {
 		req.setAttribute("vo1", vo1);
 		req.setAttribute("vo2", vo2);
 		req.setAttribute("vo3", vo3);
+		*/
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
 		dispatcher.forward(req, resp);
@@ -70,8 +81,10 @@ public class IndexController extends HttpServlet {
 		
 		resp.setContentType("text/html;charset=UTF-8");
 		
+		String jsonData = null;
+		
 		Gson gson = new Gson();
-		String jsonData = gson.toJson(vo);
+		jsonData = gson.toJson(vo);
 		
 		PrintWriter writer = resp.getWriter();
 		writer.print(jsonData);

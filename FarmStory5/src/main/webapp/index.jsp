@@ -20,51 +20,71 @@
     </div>
 
     <div class="quick">
-        <a href="#"><img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
-        <a href="#"><img src="./img/main_banner_sub2_tit.png" alt="나도 요리사"></a>                
+        <a href="/FarmStory5/board/list.do?group=community&cate=menu&pg=1"><img src="./img/main_banner_sub1_tit.png" alt="오늘의 식단"></a>
+        <a href="/FarmStory5/board/list.do?group=community&cate=chef&pg=1"><img src="./img/main_banner_sub2_tit.png" alt="나도 요리사"></a>                
     </div>
 
     <div class="latest">
         <div>
-            <a href="#"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
+            <a href="/FarmStory5/board/list.do?group=croptalk&cate=grow&pg=1"><img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기"/></a>
             <img src="./img/main_latest1_img.jpg" alt="이미지"/>
             <table border="0">
-            <c:forEach var="vo1" items="${vo1}">
+            <c:choose>
+            <c:when test="${not empty grow}">
+            <c:forEach var="vo1" items="${grow}">
                 <tr>
                     <td>></td>
                     <td><a href="/FarmStory5/board/view.do?group=croptalk&cate=grow&pg=1&no=${vo1.no}">${vo1.title}</a></td>
                     <td>${vo1.rdate}</td>
                 </tr>
             </c:forEach>
+            </c:when>
+            <c:otherwise>
+            	<span>등록된 게시글이 없습니다.</span>
+            </c:otherwise>
+            </c:choose>
             </table>
         </div>
         <div>
-            <a href="#"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
+            <a href="/FarmStory5/board/list.do?group=croptalk&cate=school&pg=1"><img src="./img/main_latest2_tit.png" alt="귀농학교"/></a>
             <img src="./img/main_latest2_img.jpg" alt="이미지"/>
             <table border="0">
-            <c:forEach var="vo2" items="${vo2}">
+            <c:choose>
+            <c:when test="${not empty school}">
+            <c:forEach var="vo2" items="${school}">
                 <tr>
                     <td>></td>
                     <td><a href="/FarmStory5/board/view.do?group=croptalk&cate=grow&pg=1&no=${vo2.no}">${vo2.title}</a></td>
                     <td>${vo2.rdate}</td>
                 </tr>
             </c:forEach>
+            </c:when>
+            <c:otherwise>
+            	<span>등록된 게시글이 없습니다.</span>
+            </c:otherwise>
+            </c:choose>
             </table>
         </div>
         <div>
-            <a href="#"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
+            <a href="/FarmStory5/board/list.do?group=croptalk&cate=story&pg=1"><img src="./img/main_latest3_tit.png" alt="농작물 이야기"/></a>
             <img src="./img/main_latest3_img.jpg" alt="이미지"/>
             <table border="0">
-            <c:forEach var="vo3" items="${vo3}">
+            <c:choose>
+            <c:when test="${not empty story}">
+            <c:forEach var="vo3" items="${story}">
                 <tr>
                     <td>></td>
                     <td><a href="/FarmStory5/board/view.do?group=croptalk&cate=grow&pg=1&no=${vo3.no}">${vo3.title}</a></td>
                     <td>${vo3.rdate}</td>
                 </tr>
             </c:forEach>
+            </c:when>
+            <c:otherwise>
+            	<span>등록된 게시글이 없습니다.</span>
+            </c:otherwise>
+            </c:choose>
             </table>
         </div>
-        
     </div>
 
     <div class="info">
@@ -80,8 +100,8 @@
                 </p>
             </div>
             <div class="btns">
-                <a href="#"><img src="./img/main_sub2_cs_bt1.png" alt="1:1 고객문의"></a>
-                <a href="#"><img src="./img/main_sub2_cs_bt2.png" alt="자주묻는질문"></a>
+                <a href="/FarmStory5/board/list.do?group=community&cate=qna&pg=1"><img src="./img/main_sub2_cs_bt1.png" alt="1:1 고객문의"></a>
+                <a href="/FarmStory5/board/list.do?group=community&cate=faq&pg=1"><img src="./img/main_sub2_cs_bt2.png" alt="자주묻는질문"></a>
                 <a href="#"><img src="./img/main_sub2_cs_bt3.png" alt="배송조회"></a>
             </div>
         </div>

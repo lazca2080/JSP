@@ -31,7 +31,6 @@ public class LoginCheckFilter implements Filter{
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
 		boardUriList = new ArrayList<>();
-		boardUriList.add("/FarmStory5/board/list.do");
 		boardUriList.add("/FarmStory5/board/write.do");
 		boardUriList.add("/FarmStory5/board/view.do");
 		boardUriList.add("/FarmStory5/board/modify.do");

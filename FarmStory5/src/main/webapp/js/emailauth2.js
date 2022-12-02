@@ -1,5 +1,5 @@
 	let preventDoubleClick = false;
-	let emailCode = 0;
+	let emailCode = 1;
 
 	$(function(){
 			$('.emailButton').click(function(){
@@ -60,7 +60,7 @@
 					$('.emailResult').css('color','green').text('인증을 완료했습니다.');
 				}else{
 					isEmailAuthOk = false;
-					$('.emailResult').css('color','green').text('인증번호가 틀립니다.\n 다시 시도해주세요');
+					$('.emailResult').css('color','red').text('인증번호가 틀립니다. 다시 시도해주세요');
 				}
 			});
 	});

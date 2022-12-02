@@ -55,8 +55,28 @@ public enum ArticleService {
 		return dao.selectArticles(limitStart, cate);
 	}
 	
+	public List<ArticleVO> searchArticleTitle(String cate, String search, int limitStart) {
+		return dao.searchArticleTitle(cate, search, limitStart);
+	}
+	
+	public List<ArticleVO> searchArticleContent(String cate, String search, int limitStart) {
+		return dao.searchArticleContent(cate, search, limitStart);
+	}
+	
+	public List<ArticleVO> searchArticleComment(String cate, String search, int limitStart) {
+		return dao.searchArticleComment(cate, search, limitStart);
+	}
+	
+	public List<ArticleVO> searchArticleNick(String cate, String search, int limitStart) {
+		return dao.searchArticleNick(cate, search, limitStart);
+	}
+	
 	public List<ArticleVO> selectLatest(String cate1, String cate2, String cate3) {
 		return dao.selectLatest(cate1, cate2, cate3);
+	}
+	
+	public List<ArticleVO> selectLatest2(String cate) {
+		return dao.selectLatest2(cate);
 	}
 	
 	public void updateArticle(String no, String title, String content, String cate) {
@@ -120,7 +140,70 @@ public enum ArticleService {
 		int pageGroupEnd = 0;     // 마지막 페이지 그룹값
 		int pageStartNum = 0;     // 이전 or 다음 버튼 클릭시 시작되는 페이지 그룹 번호
 		
+		
 		total = dao.listTotalNum(cate);
+		
+		// 페이지 마지막 번호 계산
+		if(total % 10 == 0){
+			lastPageNum = total / 10;
+		}else{
+			lastPageNum = (total / 10) + 1;
+		}
+		
+		// 현재 페이지 게시물 limit 시작값 계산
+		if(pg != null){
+			currentPg = Integer.parseInt(pg);
+			// pg를 받아올때 로그인페이지에서 바로 넘어오는 경우 null이기 때문에 null 체크를 해준다
+		}
+		
+		limitStart = (currentPg - 1) * 10;
+		
+		// 페이지 그룹 계산
+		pageGroupCurrent =  (int)Math.ceil(currentPg / 10.0);
+		pageGroupStart = (pageGroupCurrent-1) * 10 + 1;
+		pageGroupEnd = pageGroupCurrent * 10;
+		
+		if(pageGroupEnd > lastPageNum){
+			pageGroupEnd = lastPageNum;
+		}
+		
+		// 페이지 시작 번호 계산
+		pageStartNum = (total - limitStart)+1;
+		
+		PagenumVO vo = new PagenumVO();
+		vo.setLimitStart(limitStart);
+		vo.setCurrentPg(currentPg);
+		vo.setTotal(total);
+		vo.setLastPageNum(lastPageNum);
+		vo.setPageGroupCurrent(pageGroupCurrent);
+		vo.setPageGroupStart(pageGroupStart);
+		vo.setPageGroupEnd(pageGroupEnd);
+		vo.setPageStartNum(pageStartNum);
+		
+		return vo;
+	}
+	
+public PagenumVO pageNum2(String pg, String cate, String search, String option) {
+		
+		int limitStart = 0;       // SQL Limit ?, 10의 ?값 시작값
+		int currentPg = 1;        // 현재 페이지 값 로그인페이지에서 넘어올시 첫화면으로 표시하기 위해 1값
+		int total = 0;            // 전체 게시글 수
+		int lastPageNum = 0;      // 마지막 페이지 값
+		int pageGroupCurrent = 1; // 현재 페이지 그룹
+		int pageGroupStart = 1;   // 시작 페이지 그룹값
+		int pageGroupEnd = 0;     // 마지막 페이지 그룹값
+		int pageStartNum = 0;     // 이전 or 다음 버튼 클릭시 시작되는 페이지 그룹 번호
+		
+		
+		if(option.equals("title")) {
+			total = dao.titleTotalNum(cate, "%"+search+"%");
+		}else if(option.equals("comment")) {
+			total = dao.commentTotalNum(cate, "%"+search+"%");
+		}else if(option.equals("nick")) {
+			total = dao.nickTotalNum(cate, "%"+search+"%");
+		}else if(option.equals("content")) {
+			total = dao.contentTotalNum(cate, "%"+search+"%");
+		}
 		
 		// 페이지 마지막 번호 계산
 		if(total % 10 == 0){

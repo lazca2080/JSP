@@ -36,6 +36,7 @@
 #board > .list > table tr > td:nth-child(5) {}
 
 #board > .list > .page {
+	height: 32px;
     text-align: center;
     margin-top: 10px;
 }
@@ -57,6 +58,13 @@
 #board > .list > form {
     float: right;
     margin-bottom: -14px;
+}
+
+#board > .list > form > select {
+    border: 1px solid #d7d7d7;
+    background: #f2f2f2; 
+    color: #111;
+    padding: 6px;
 }
 
 #board > .list > form > input[name=search]{

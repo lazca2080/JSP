@@ -35,8 +35,6 @@ public class AutoLoginFilter implements Filter{
 		
 		UserVO sessUser = (UserVO)sess.getAttribute("sessUser");
 		
-		resp.setContentType("text/html;charset=UTF-8");
-		
 		if(sessUser != null) {
 			// 로그인 상태일 경우
 			// 다음 필터 실행

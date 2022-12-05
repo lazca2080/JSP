@@ -26,6 +26,8 @@
 			
 			let jsonData = { "uid":uid };
 			
+			if(uid != ''){
+							
 			$('.uidResult').css('color','black').text('중복 확인중입니다...');
 			
 			setTimeout(function(){
@@ -52,6 +54,9 @@
 					}
 				});
 			}, 500);
+			}else{
+				alert('아이디를 입력하세요');
+			}
 		});
 		
 		$('input[name=pass2]').focusout(function(){
@@ -94,6 +99,8 @@
 			
 			let jsonData = { "nick":nick }
 			
+			if(nick != ''){
+							
 			$('.nickResult').css('color','black').text('중복 확인중입니다...');
 			
 			setTimeout(function(){
@@ -119,6 +126,9 @@
 					}
 				});
 			}, 1000);
+			}else{
+				alert('별명을 입력하세요');
+			}
 		});
 		
 		$('.emailCheck').click(function(){
@@ -127,7 +137,10 @@
 			
 			let jsonData = { "email":email };
 			
-			$.ajax({
+			console.log(email);
+			
+			if(email != ''){
+				$.ajax({
 				url:'/FarmStory5/user/checkEmail.do',
 				method:'get',
 				data:jsonData,
@@ -143,37 +156,44 @@
 						$('.emailResult').css('color','green').text('사용 가능한 이메일 입니다.');
 					}
 				}
-			});
+				});
+			}else{
+				alert('이메일을 입력하세요.');
+			}
 		});
 		
 		$('.hpCheck').click(function(){
 			
 			let hp = $('input[name=hp]').val();
 			
-			if(hp.match(reHp)){
-				$('.hpResult').css('color', 'green').text('');
-				
-				let jsonData = { "hp":hp };
-				
-				$.ajax({
-					url:'/FarmStory5/user/checkHp.do',
-					method:'get',
-					data:jsonData,
-					dataType:'json',
-					success: function(data){
-						
-						if(data.result > 0){
-							isHpOk = false;
-							$('.hpResult').css('color', 'red').text('이미 사용중인 번호입니다.');
-						}else{
-							isHpOk = true;
-							$('.hpResult').css('color', 'green').text('사용 가능한 번호입니다.');
+			if(hp != ''){
+				if(hp.match(reHp)){
+					$('.hpResult').css('color', 'green').text('');
+					
+					let jsonData = { "hp":hp };
+					
+					$.ajax({
+						url:'/FarmStory5/user/checkHp.do',
+						method:'get',
+						data:jsonData,
+						dataType:'json',
+						success: function(data){
+							
+							if(data.result > 0){
+								isHpOk = false;
+								$('.hpResult').css('color', 'red').text('이미 사용중인 번호입니다.');
+							}else{
+								isHpOk = true;
+								$('.hpResult').css('color', 'green').text('사용 가능한 번호입니다.');
+							}
 						}
-					}
-				});
+					});
+				}else{
+					isHpOk = false;
+					$('.hpResult').css('color', 'red').text('번호 양식에 맞지 않습니다.');
+				}
 			}else{
-				isHpOk = false;
-				$('.hpResult').css('color', 'red').text('번호 양식에 맞지 않습니다.');
+				alert('휴대폰을 입력하세요');
 			}
 		});
 		

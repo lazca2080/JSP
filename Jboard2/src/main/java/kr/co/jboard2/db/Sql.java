@@ -18,6 +18,9 @@ public class Sql {
 	
 	public static final String SELECT_TERMS = "SELECT * FROM `board_terms`";
 	public static final String SELECT_USER = "SELECT * FROM `board_user` WHERE `uid`=? and `pass`=SHA2(?, 256)";
+	public static final String SELECT_USER_FOR_UPDATE_SESSION = "SELECT * FROM `board_user` WHERE `uid`=?";
+	public static final String UPDATE_USER = "UPDATE `board_user` SET `name`=?, `nick`=?, `email`=?, `hp`=?, `zip`=?, `addr1`=?, `addr2`=? WHERE `uid`=?";
+	public static final String OUT_USER = "UPDATE `board_user` SET `grade`='0', `wdate`=NOW(), `sessId`=null, `sessLimitDate`=null WHERE `uid`=?";
 	public static final String SELECT_COUNT_UID = "SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=?";
 	public static final String SELECT_COUNT_NICK = "SELECT COUNT(`nick`) FROM `board_user` WHERE `nick`=?";
 	public static final String SELECT_USER_FOR_FINDID = "SELECT * FROM `board_user` WHERE `name`=? AND `email`=?";

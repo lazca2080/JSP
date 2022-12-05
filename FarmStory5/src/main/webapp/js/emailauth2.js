@@ -52,9 +52,6 @@
 				
 				let Code = $('input[name=auth]').val();
 				
-				console.log(emailCode);
-				console.log(Code);
-				
 				if(emailCode == Code){
 					isEmailAuthOk = true;
 					$('.emailResult').css('color','green').text('인증을 완료했습니다.');

@@ -116,6 +116,27 @@ public class userDAO {
 		
 	}
 	
+	public int outUser(String uid) {
+		
+		int result = 0;
+		
+		try {
+			logger.debug("outUser...");
+			Connection conn = DBCP.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(Sql.OUT_USER);
+			psmt.setString(1, uid);
+			
+			result = psmt.executeUpdate();
+			
+			conn.close();
+			psmt.close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return result;
+	}
+	
 	public UserVO selectUserForFindId(String name, String email) {
 		
 		UserVO vo = null;
@@ -214,9 +235,59 @@ public class userDAO {
 		return vo;
 	}
 	
-	public void selectUsers() {}
-	
-	public void updateUser() {}
+	public UserVO updateUser(UserVO vo) {
+		
+		UserVO user = null;
+		
+		try {
+			logger.debug("updateUser...");
+			Connection conn = DBCP.getConnection();
+			
+			conn.setAutoCommit(false);
+			PreparedStatement psmt1 = conn.prepareStatement(Sql.UPDATE_USER);
+			psmt1.setString(1, vo.getName());
+			psmt1.setString(2, vo.getNick());
+			psmt1.setString(3, vo.getEmail());
+			psmt1.setString(4, vo.getHp());
+			psmt1.setString(5, vo.getZip());
+			psmt1.setString(6, vo.getAddr1());
+			psmt1.setString(7, vo.getAddr2());
+			psmt1.setString(8, vo.getUid());
+			PreparedStatement psmt2 = conn.prepareStatement(Sql.SELECT_USER_FOR_UPDATE_SESSION);
+			psmt2.setString(1, vo.getUid());
+			
+			psmt1.executeUpdate();
+			ResultSet rs = psmt2.executeQuery();
+			
+			conn.commit();
+			
+			if(rs.next()) {
+				user = new UserVO();
+				user.setUid(rs.getString(1));
+				user.setPass(rs.getString(2));
+				user.setName(rs.getString(3));
+				user.setNick(rs.getString(4));
+				user.setEmail(rs.getString(5));
+				user.setHp(rs.getString(6));
+				user.setGrade(rs.getInt(7));
+				user.setZip(rs.getString(8));
+				user.setAddr1(rs.getString(9));
+				user.setAddr2(rs.getString(10));
+				user.setRegip(rs.getString(11));
+				user.setRdate(rs.getString(12));
+			}
+			
+			conn.close();
+			psmt1.close();
+			psmt2.close();
+			rs.close();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return vo;
+	}
 	
 	public int updateUserPassword(String pass, String uid) {
 		

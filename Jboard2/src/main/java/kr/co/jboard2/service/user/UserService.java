@@ -36,6 +36,14 @@ public enum UserService {
 		return dao.selectUser(uid, pass);
 	}
 	
+	public UserVO updateUser(UserVO vo) {
+		return dao.updateUser(vo);
+	}
+	
+	public int outUser(String uid) {
+		return dao.outUser(uid);
+	}
+	
 	public UserVO selectUserForFindId(String name, String email) {
 		return dao.selectUserForFindId(name, email);
 	}
